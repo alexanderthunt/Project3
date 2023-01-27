@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: planetarium-service-monitor
+  labels:
+    release: prometheus
+spec:
+  jobLabel: job
+  selector:
+    matchLabels:
+      app: planetarium
+  endpoints:
+  - port: http
+    path: /actuator/prometheus
+    interval: 10s
