@@ -65,7 +65,7 @@ buildNumber.properties
 .history
 .ionide
 
-manifests 
+manifests/*
 *.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,maven,java
