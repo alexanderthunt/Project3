@@ -34,11 +34,11 @@ spec:
           volumeMounts:
             - name: logs
               mountPath: /logs
-            - name: promtail-config
+            - name: green-promtail
               mountPath: /etc/promtail
 
       volumes:
         - name: logs
-        - name: promtail-config
+        - name: green-promtail
           configMap:
-            name: promtail-config # make sure you apply the config map before this deployment
+            name: green-promtail # make sure you apply the config map before this deployment
