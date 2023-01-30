@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: planetarium-prometheus-rules-high-cpu-usage
+  labels:
+    release: prometheus
+spec:
+  groups:
+  - name: High CPU Usage
+    rules:
+    - alert: High CPU Usage
+      expr: system_cpu_usage{job="planetarium-app"} > 0.10
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has CPU Utilisation above 0.10 units"
