@@ -1,0 +1,44 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "green-deployment"
+  namespace: "default"
+  labels:
+    app: "green"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "green"
+  template:
+    metadata:
+      labels:
+        app: "green"
+    spec:
+      containers:
+        - name: "green"
+          image: "alexanderhunt/planetarium:incident2" # twcl774/p3green:test
+          envFrom:
+            - secretRef:
+                name: green-secret
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /logs
+              name: logs
+        - name: promtail-container
+          image: grafana/promtail
+          args:
+            - -config.file=/etc/promtail/promtail.yml
+          volumeMounts:
+            - name: logs
+              mountPath: /logs
+            - name: promtail-config
+              mountPath: /etc/promtail
+
+      volumes:
+        - name: logs
+        - name: promtail-config
+          configMap:
+            name: promtail-config # make sure you apply the config map before this deployment
