@@ -1,0 +1,44 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "planetarium-deployment"
+  namespace: "default"
+  labels:
+    app: "planetarium"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "planetarium"
+  template:
+    metadata:
+      labels:
+        app: "planetarium"
+    spec:
+      containers:
+        - name: "planetarium"
+          image: "esuminski/p3planetarium:base"
+          envFrom:
+            - secretRef:
+                name: planetarium-secret
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /logs
+              name: logs
+        - name: promtail-container
+          image: grafana/promtail
+          args:
+            - -config.file=/etc/promtail/promtail.yml
+          volumeMounts:
+            - name: logs
+              mountPath: /logs
+            - name: promtail-config
+              mountPath: /etc/promtail
+
+      volumes:
+        - name: logs
+        - name: promtail-config
+          configMap:
+            name: promtail-config # make sure you apply the config map before this deployment
