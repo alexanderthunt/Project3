@@ -1,33 +1,121 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: planetarium-prometheus-rules-appdown
+  name: green-alerts
   labels:
     release: prometheus
 spec:
   groups:
   - name: Green
+
     rules:
     - alert: AppDown
-      expr: up{job="planetarium-app"} != 1
+      expr: up{job="green-app"} != 1
       labels:
         severity: critical
       annotations:
-        summary: "App is down"
-        description: "Prometheus has detected the application is not running"
+        summary: "Green App is down"
+        description: "Prometheus has detected the green application is not running"
 
     - alert: Latency 5m Interval
-      expr: sum(rate(http_server_requests_seconds_sum{job="planetarium-app"}[5m])) / sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m])) > .2
+      expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[5m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[5m])) > .2
       labels:
         severity: critical
       annotations:
-        summary: "Latency is over 200ms within 5m interval"
-        description: "Prometheus has detected the application latency is over 200ms"     
+        summary: "Green latency is over 200ms within 5m interval"
+        description: "Prometheus has detected the green application latency is over 200ms"
 
-    - alert: Success Rate 5m Interval
-      expr: sum(rate(http_server_requests_seconds_count{job="planetarium-app", outcome!="SERVER_ERROR"}[5m])) / sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m])) < .999
+    - alert: Latency 15m Interval
+      expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[15m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[15m])) > .2
       labels:
         severity: critical
       annotations:
-        summary: "Success rate is below 99.9% within 5m interval"
-        description: "Prometheus has detected the application success rate is below 99.9%"
+        summary: "Green latency is over 200ms within 15m interval"
+        description: "Prometheus has detected the green application latency is over 200ms"
+
+    - alert: Latency 30m Interval
+      expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[30m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[30m])) > .2
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green latency is over 200ms within 30m interval"
+        description: "Prometheus has detected the green application latency is over 200ms"
+
+    - alert: Latency 60m Interval
+      expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[60m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[60m])) > .2
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green latency is over 200ms within 60m interval"
+        description: "Prometheus has detected the green application latency is over 200ms" 
+    - alert: Success Rate 5m Interval
+      expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[5m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[5m])) < .999
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green success rate is below 99.9% within 5m interval"
+        description: "Prometheus has detected the green application success rate is below 99.9%"
+
+    - alert: Success Rate 15m Interval
+      expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[15m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[15m])) < .999
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green success rate is below 99.9% within 15m interval"
+        description: "Prometheus has detected the green application success rate is below 99.9%"
+
+    - alert: Success Rate 30m Interval
+      expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[30m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[30m])) < .999
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green success rate is below 99.9% within 30m interval"
+        description: "Prometheus has detected the green application success rate is below 99.9%"
+
+    - alert: Success Rate 60m Interval
+      expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[60m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[60m])) < .999
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green success rate is below 99.9% within 60m interval"
+        description: "Prometheus has detected the green application success rate is below 99.9%"
+
+    - alert: High CPU Usage
+      expr: system_cpu_usage{job="green-app"} > 0.10
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green high CPU Usage Detected"
+        description: "Prometheus has detected one of the green applications has CPU Utilization above 0.10 units"
+
+    - alert: PodRestart 5m Interval 
+      expr: sum(increase(kube_pod_container_status_restarts_total{namespace="default"}[5m])) > 1
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green pods are restarting more than once within 5m interval"
+        description: "Prometheus has detected the green cluster's pods are consistently restarting"
+
+    - alert: PodRestart 15m Interval 
+      expr: sum(increase(kube_pod_container_status_restarts_total{namespace="default"}[15m])) > 1
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green pods are restarting more than once within 15m interval"
+        description: "Prometheus has detected the green cluster's pods are consistently restarting"
+
+    - alert: PodRestart 30m Interval 
+      expr: sum(increase(kube_pod_container_status_restarts_total{namespace="default"}[30m])) > 1
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green pods are restarting more than once within 30m interval"
+        description: "Prometheus has detected the green cluster's pods are consistently restarting"
+
+    - alert: PodRestart 60m Interval 
+      expr: sum(increase(kube_pod_container_status_restarts_total{namespace="default"}[60m])) > 1
+      labels:
+        severity: critical
+      annotations:
+        summary: "Green pods are restarting more than once within 60m interval"
+        description: "Prometheus has detected the green cluster's pods are consistently restarting"
