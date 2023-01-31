@@ -1,0 +1,49 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: planetarium-prometheus-rules-high-memory-usage
+  labels:
+    release: prometheus
+spec:
+  groups:
+  - name: High Memory Usage
+    rules:
+    - alert: High memory Usage 5m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[5m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
+
+    - alert: High memory Usage 10m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[10m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
+
+    - alert: High memory Usage 15m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[15m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
+
+    - alert: High memory Usage 30m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[30m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
+
+    - alert: High memory Usage 60m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[60m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
