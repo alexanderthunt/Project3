@@ -19,6 +19,6 @@ data:
               - localhost
             labels:
               job: green-logs
-              app: green
+              app: green # or planetarium?
               __path__: /logs/*.log
               namespace: default

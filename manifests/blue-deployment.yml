@@ -1,7 +1,7 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "planetarium-deployment"
+  name: "planetarium-deployment-blue"
   namespace: "default"
   labels:
     app: "planetarium"
@@ -9,15 +9,17 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: "planetarium"
+      app: "planetarium" # does this also need a role
+      role: "blue"
   template:
     metadata:
       labels:
         app: "planetarium"
+        role: "blue"
     spec:
       containers:
         - name: "planetarium"
-          image: "esuminski/p3planetarium:base"
+          image: "esuminski/p3planetarium:base" # ${VERSION}
           envFrom:
             - secretRef:
                 name: planetarium-secret
@@ -27,18 +29,18 @@ spec:
           volumeMounts:
             - mountPath: /logs
               name: logs
-        - name: promtail-container
+        - name: promtail-container # does promtail stuff need to be updated
           image: grafana/promtail
           args:
             - -config.file=/etc/promtail/promtail.yml
           volumeMounts:
             - name: logs
               mountPath: /logs
-            - name: promtail-config
+            - name: blue-promtail
               mountPath: /etc/promtail
 
       volumes:
         - name: logs
-        - name: promtail-config
+        - name: blue-promtail
           configMap:
-            name: promtail-config # make sure you apply the config map before this deployment
+            name: blue-promtail # make sure you apply the config map before this deployment

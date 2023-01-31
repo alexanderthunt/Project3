@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: promtail-config
+  name: blue-promtail
   namespace: default 
 data:
   promtail.yml: |-
@@ -18,7 +18,7 @@ data:
           - targets:
               - localhost
             labels:
-              job: app-logs
-              app: planetarium
+              job: blue-logs
+              app: blue # or planetarium
               __path__: /logs/*.log
               namespace: default

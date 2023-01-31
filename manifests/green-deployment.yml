@@ -1,33 +1,35 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "green-deployment"
+  name: "planetarium-deployment-green"
   namespace: "default"
   labels:
-    app: "green"
+    app: "planetarium" # doulbe check that this is right
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: "green"
+      app: "planetarium" # does this need role
+      role: "green"
   template:
     metadata:
       labels:
-        app: "green"
+        app: "planetarium"
+        role: "green"
     spec:
       containers:
-        - name: "green"
-          image: "alexanderhunt/planetarium:incident2" # twcl774/p3green:test
+        - name: "planetarium"
+          image: "alexanderhunt/planetarium:incident2" # twcl774/p3green:test # ${VERSION}
           envFrom:
             - secretRef:
-                name: green-secret
+                name: planetarium-secret # double check
           imagePullPolicy: "Always"
           ports:
             - containerPort: 8080
           volumeMounts:
             - mountPath: /logs
               name: logs
-        - name: promtail-container
+        - name: promtail-container # does promtail stuff need to be updated
           image: grafana/promtail
           args:
             - -config.file=/etc/promtail/promtail.yml
