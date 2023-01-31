@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true" 
     nginx.ingress.kubernetes.io/rewrite-target: $1
     nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-path: /planetarium 
+    nginx.ingress.kubernetes.io/session-cookie-path: "/" 
     nginx.ingress.kubernetes.io/session-cookie-expires: "172800" 
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/affinity-mode: balanced
@@ -20,5 +20,19 @@ spec:
             backend:
               service:
                 name: planetarium-clusterip 
+                port:
+                  number: 80
+          - path: /green(.+) 
+            pathType: Prefix
+            backend:
+              service:
+                name: green-clusterip 
+                port:
+                  number: 80
+          - path: /blue(.+) 
+            pathType: Prefix
+            backend:
+              service:
+                name: blue-clusterip 
                 port:
                   number: 80
