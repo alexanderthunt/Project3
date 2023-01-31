@@ -8,10 +8,42 @@ spec:
   groups:
   - name: High CPU Usage
     rules:
-    - alert: High CPU Usage
-      expr: system_cpu_usage{job="planetarium-app"} > 0.10
+    - alert: High CPU Usage 5m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[5m]) > 0.02
       labels:
         severity: critical
       annotations:
         summary: "High CPU Usage Detected"
-        description: "Prometheus has detected one of the planetarium applications has CPU Utilisation above 0.10 units"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+
+    - alert: High CPU Usage 10m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[10m]) > 0.02
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+
+    - alert: High CPU Usage 15m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[15m]) > 0.02
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+
+    - alert: High CPU Usage 30m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[30m]) > 0.02
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+
+    - alert: High CPU Usage 60m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[60m]) > 0.02
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
