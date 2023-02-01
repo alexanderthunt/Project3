@@ -80,14 +80,6 @@ spec:
         summary: "Green success rate is below 99.9% within 60m interval"
         description: "Prometheus has detected the green application success rate is below 99.9%"
 
-    - alert: High CPU Usage
-      expr: system_cpu_usage{job="green-app"} > 0.10
-      labels:
-        severity: critical
-      annotations:
-        summary: "Green high CPU Usage Detected"
-        description: "Prometheus has detected one of the green applications has CPU Utilization above 0.10 units"
-
     - alert: PodRestart 5m Interval 
       expr: sum(increase(kube_pod_container_status_restarts_total{namespace="default"}[5m])) > 1
       labels:
@@ -119,3 +111,84 @@ spec:
       annotations:
         summary: "Green pods are restarting more than once within 60m interval"
         description: "Prometheus has detected the green cluster's pods are consistently restarting"
+
+    - alert: High CPU Usage 5m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[5m]) > 0.02
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+
+    - alert: High CPU Usage 10m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[10m]) > 0.02
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+
+    - alert: High CPU Usage 15m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[15m]) > 0.02
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+
+    - alert: High CPU Usage 30m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[30m]) > 0.02
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+
+    - alert: High CPU Usage 60m Interval
+      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[60m]) > 0.02
+      labels:
+        severity: critical
+      annotations:
+        summary: "High CPU Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+    
+    - alert: High memory Usage 5m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[5m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
+
+    - alert: High memory Usage 10m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[10m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
+
+    - alert: High memory Usage 15m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[15m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
+
+    - alert: High memory Usage 30m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[30m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
+
+    - alert: High memory Usage 60m Interval
+      expr: rate(container_memory_usage_bytes{container="planetarium"}[60m]) > 2500000
+      labels:
+        severity: critical
+      annotations:
+        summary: "High memory Usage Detected"
+        description: "Prometheus has detected one of the planetarium applications has High memory usage"
+    
