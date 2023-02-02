@@ -8,6 +8,9 @@ spec:
     groups:
         - name: High CPU Usage
           rules:
+              ##
+              ## Filtered twice, first by container name then pod name
+              ##
               - alert: High CPU Usage 5m Interval
                 expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[5m]) > 0.15
                 labels:
