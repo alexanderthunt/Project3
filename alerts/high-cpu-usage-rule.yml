@@ -1,49 +1,49 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: planetarium-prometheus-rules-high-cpu-usage
-  labels:
-    release: prometheus
+    name: planetarium-prometheus-rules-high-cpu-usage
+    labels:
+        release: prometheus
 spec:
-  groups:
-  - name: High CPU Usage
-    rules:
-    - alert: High CPU Usage 5m Interval
-      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[5m]) > 0.02
-      labels:
-        severity: critical
-      annotations:
-        summary: "High CPU Usage Detected"
-        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+    groups:
+        - name: High CPU Usage
+          rules:
+              - alert: High CPU Usage 5m Interval
+                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[5m]) > 0.15
+                labels:
+                    severity: critical
+                annotations:
+                    summary: "High CPU Usage Detected"
+                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
 
-    - alert: High CPU Usage 10m Interval
-      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[10m]) > 0.02
-      labels:
-        severity: critical
-      annotations:
-        summary: "High CPU Usage Detected"
-        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+              - alert: High CPU Usage 10m Interval
+                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[10m]) > 0.15
+                labels:
+                    severity: critical
+                annotations:
+                    summary: "High CPU Usage Detected"
+                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
 
-    - alert: High CPU Usage 15m Interval
-      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[15m]) > 0.02
-      labels:
-        severity: critical
-      annotations:
-        summary: "High CPU Usage Detected"
-        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+              - alert: High CPU Usage 15m Interval
+                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[15m]) > 0.15
+                labels:
+                    severity: critical
+                annotations:
+                    summary: "High CPU Usage Detected"
+                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
 
-    - alert: High CPU Usage 30m Interval
-      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[30m]) > 0.02
-      labels:
-        severity: critical
-      annotations:
-        summary: "High CPU Usage Detected"
-        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+              - alert: High CPU Usage 30m Interval
+                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[30m]) > 0.15
+                labels:
+                    severity: critical
+                annotations:
+                    summary: "High CPU Usage Detected"
+                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
 
-    - alert: High CPU Usage 60m Interval
-      expr: rate(container_cpu_usage_seconds_total{container="planetarium"}[60m]) > 0.02
-      labels:
-        severity: critical
-      annotations:
-        summary: "High CPU Usage Detected"
-        description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+              - alert: High CPU Usage 60m Interval
+                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[60m]) > 0.15
+                labels:
+                    severity: critical
+                annotations:
+                    summary: "High CPU Usage Detected"
+                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
