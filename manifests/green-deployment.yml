@@ -47,6 +47,11 @@ spec:
                 operator: In
                 values:
                 - ip-10-0-2-30.ec2.internal
+      tolerations:
+        - effect: NoSchedule
+          key: app
+          opperatior: Equal
+          value: greenPlanetarium
 
       volumes:
         - name: logs
