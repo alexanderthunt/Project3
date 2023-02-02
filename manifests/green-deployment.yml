@@ -52,6 +52,12 @@ spec:
           key: app
           operator: Equal
           value: greenPlanetarium
+        - effect: NoExecute
+          key: app
+          operator: Equal
+          value: greenPlanetarium
+
+
 
       volumes:
         - name: logs
