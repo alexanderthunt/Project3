@@ -12,7 +12,7 @@ spec:
               ## Filtered twice, first by container name then pod name
               ## Spike(Instantaneous) in cpu usage
               ##
-              - alert: High CPU Usage 5m Interval
+              - alert: Spike in CPU Usage
                 expr: irate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[1m]) > 0.2
                 labels:
                     severity: critical

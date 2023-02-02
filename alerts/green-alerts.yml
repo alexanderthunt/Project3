@@ -145,7 +145,7 @@ spec:
               ############################
               ## Fires an alert when current memory usage is above ~384 MB
 
-              - alert: High memory Usage 5m Interval
+              - alert: High memory Usage
                 expr: container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-green.*"} > 400000000
                 labels:
                     severity: critical
