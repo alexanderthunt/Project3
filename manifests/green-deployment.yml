@@ -50,7 +50,7 @@ spec:
       tolerations:
         - effect: NoSchedule
           key: app
-          opperatior: Equal
+          operatior: Equal
           value: greenPlanetarium
 
       volumes:
