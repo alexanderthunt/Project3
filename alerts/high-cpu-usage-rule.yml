@@ -10,6 +10,18 @@ spec:
           rules:
               ##
               ## Filtered twice, first by container name then pod name
+              ## Spike(Instantaneous) in cpu usage
+              ##
+              - alert: High CPU Usage 5m Interval
+                expr: irate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[1m]) > 0.2
+                labels:
+                    severity: critical
+                annotations:
+                    summary: "Spike in CPU Usage Detected"
+                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+              ##
+              ## Filtered twice, first by container name then pod name
+              ## Avg cpu usage above indicated value
               ##
               - alert: High CPU Usage 5m Interval
                 expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[5m]) > 0.15

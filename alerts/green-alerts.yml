@@ -93,13 +93,21 @@ spec:
               ############################
               ############################
 
+              - alert: Spike in CPU Usage
+                expr: irate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[1m]) > 0.2
+                labels:
+                    severity: critical
+                annotations:
+                    summary: "Spike in CPU Usage Detected"
+                    description: "Prometheus has detected one of the green app has High CPU usage"
+
               - alert: High CPU Usage 5m Interval
                 expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[5m]) > 0.15
                 labels:
                     severity: critical
                 annotations:
                     summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+                    description: "Prometheus has detected one of the green app has High CPU usage"
 
               - alert: High CPU Usage 10m Interval
                 expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[10m]) > 0.15
@@ -107,7 +115,7 @@ spec:
                     severity: critical
                 annotations:
                     summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+                    description: "Prometheus has detected one of the green app has High CPU usage"
 
               - alert: High CPU Usage 15m Interval
                 expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[15m]) > 0.15
@@ -115,7 +123,7 @@ spec:
                     severity: critical
                 annotations:
                     summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+                    description: "Prometheus has detected one of the green app has High CPU usage"
 
               - alert: High CPU Usage 30m Interval
                 expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[30m]) > 0.15
@@ -123,7 +131,7 @@ spec:
                     severity: critical
                 annotations:
                     summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+                    description: "Prometheus has detected one of the green app has High CPU usage"
 
               - alert: High CPU Usage 60m Interval
                 expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[60m]) > 0.15
@@ -131,7 +139,7 @@ spec:
                     severity: critical
                 annotations:
                     summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High CPU usage"
+                    description: "Prometheus has detected one of the green app has High CPU usage"
 
               ############################
               ############################
@@ -143,6 +151,6 @@ spec:
                     severity: critical
                 annotations:
                     summary: "High memory Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High memory usage"
+                    description: "Prometheus has detected one of the green app has High memory usage"
 
               ############################
