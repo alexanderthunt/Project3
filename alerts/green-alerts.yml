@@ -135,45 +135,14 @@ spec:
 
               ############################
               ############################
+              ## Fires an alert when current memory usage is above ~384 MB
 
               - alert: High memory Usage 5m Interval
-                expr: sum(rate(container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-blue.*"}[5m])) > 500000000
+                expr: container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-green.*"} > 400000000
                 labels:
                     severity: critical
                 annotations:
                     summary: "High memory Usage Detected"
                     description: "Prometheus has detected one of the planetarium applications has High memory usage"
 
-              - alert: High memory Usage 10m Interval
-                expr: sum(rate(container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-blue.*"}[10m])) > 500000000
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High memory Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High memory usage"
-
-              - alert: High memory Usage 15m Interval
-                expr: sum(rate(container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-blue.*"}[15m])) > 500000000
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High memory Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High memory usage"
-
-              - alert: High memory Usage 30m Interval
-                expr: sum(rate(container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-blue.*"}[30m])) > 500000000
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High memory Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High memory usage"
-
-              - alert: High memory Usage 60m Interval
-                expr: sum(rate(container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-blue.*"}[60m])) > 500000000
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High memory Usage Detected"
-                    description: "Prometheus has detected one of the planetarium applications has High memory usage"
-
-          ############################
+              ############################
