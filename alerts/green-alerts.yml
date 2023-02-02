@@ -94,7 +94,7 @@ spec:
               ############################
 
               - alert: Spike in CPU Usage
-                expr: irate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[1m]) > 0.2
+                expr: irate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[5m]) > 0.2
                 labels:
                     severity: critical
                 annotations:
