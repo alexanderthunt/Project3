@@ -1,46 +1,46 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "planetarium-deployment-blue"
-  namespace: "default"
-  labels:
-    app: "planetarium"
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: "planetarium" # does this also need a role
-      role: "blue"
-  template:
-    metadata:
-      labels:
+    name: "planetarium-deployment-blue"
+    namespace: "default"
+    labels:
         app: "planetarium"
-        role: "blue"
-    spec:
-      containers:
-        - name: "planetarium"
-          image: "esuminski/p3planetarium:base" # ${VERSION}
-          envFrom:
-            - secretRef:
-                name: planetarium-secret
-          imagePullPolicy: "Always"
-          ports:
-            - containerPort: 8080
-          volumeMounts:
-            - mountPath: /logs
-              name: logs
-        - name: promtail-container # does promtail stuff need to be updated
-          image: grafana/promtail
-          args:
-            - -config.file=/etc/promtail/promtail.yml
-          volumeMounts:
-            - name: logs
-              mountPath: /logs
-            - name: blue-promtail
-              mountPath: /etc/promtail
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: "planetarium" # does this also need a role
+            role: "blue"
+    template:
+        metadata:
+            labels:
+                app: "planetarium"
+                role: "blue"
+        spec:
+            containers:
+                - name: "planetarium"
+                  image: "esuminski/p3planetarium:base" # ${VERSION}
+                  envFrom:
+                      - secretRef:
+                            name: planetarium-secret
+                  imagePullPolicy: "Always"
+                  ports:
+                      - containerPort: 8080
+                  volumeMounts:
+                      - mountPath: /logs
+                        name: logs
+                - name: promtail-container # does promtail stuff need to be updated
+                  image: grafana/promtail
+                  args:
+                      - -config.file=/etc/promtail/promtail.yml
+                  volumeMounts:
+                      - name: logs
+                        mountPath: /logs
+                      - name: blue-promtail
+                        mountPath: /etc/promtail
 
-      volumes:
-        - name: logs
-        - name: blue-promtail
-          configMap:
-            name: blue-promtail # make sure you apply the config map before this deployment
+            volumes:
+                - name: logs
+                - name: blue-promtail
+                  configMap:
+                      name: blue-promtail # make sure you apply the config map before this deployment
