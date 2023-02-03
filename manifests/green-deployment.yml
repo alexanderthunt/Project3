@@ -42,11 +42,11 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - ip-10-0-2-30.ec2.internal
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - ip-10-0-2-30.ec2.internal
       tolerations:
         - effect: NoSchedule
           key: app
@@ -56,8 +56,6 @@ spec:
           key: app
           operator: Equal
           value: greenPlanetarium
-
-
 
       volumes:
         - name: logs

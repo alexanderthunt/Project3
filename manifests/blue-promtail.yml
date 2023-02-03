@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: blue-promtail
-  namespace: default 
+  namespace: default
 data:
   promtail.yml: |-
     server:
