@@ -8,9 +8,14 @@ spec:
   groups:
     - name: SLOs-http_server_requests_seconds
       rules:
-        - alert: LatencyBudgetBurn  2 Days window
+        - alert: LatencyBudgetBurn 2 Days window
           annotations:
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
+
+          ##
+          ## Convert failure rate to percentage and compare against 100ms multiplied by the burn-rate value
+          ##
+
           expr: |
             (
             100 * latencytarget:http_server_requests_seconds:rate5m{job="planetarium-app"}
@@ -79,6 +84,10 @@ spec:
           labels:
             job: planetarium-app
             severity: warning
+
+          ##
+          ## Returns the failure rate of responses that are greater than 89ms response time
+          ##
 
         - expr: |
             (
