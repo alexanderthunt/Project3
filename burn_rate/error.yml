@@ -11,6 +11,11 @@ spec:
         - alert: ErrorBudgetBurn 2 Days window
           annotations:
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
+
+          ##
+          ## Alert fires when failure rate is greater than burn-rate multiplied by the allowed failure rate
+          ##
+
           expr: |
             sum(http_server_requests_seconds_count:burnrate5m{job="planetarium-app"}) > (14.40 * (1-0.99900))
             and
@@ -55,6 +60,10 @@ spec:
           labels:
             job: planetarium-app
             severity: warning
+
+        ##
+        ## Calculate the failure rate of http requests
+        ##
 
         - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[1d]))

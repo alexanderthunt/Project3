@@ -13,7 +13,8 @@ spec:
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
 
           ##
-          ## Convert failure rate to percentage and compare against 100ms multiplied by the burn-rate value
+          ## Convert failure rate to percentage and compared against .1% multiplied by the burn-rate value
+          ## Alert fires if the failure rate is greater than burn-rate multiplied by the allowed failure rate
           ##
 
           expr: |
