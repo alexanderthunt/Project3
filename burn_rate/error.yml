@@ -10,6 +10,7 @@ spec:
       rules:
         - alert: ErrorBudgetBurn 2 Days window
           annotations:
+            summary: "2% error budget consumption every 1 hour"
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
 
           ##
@@ -27,6 +28,7 @@ spec:
 
         - alert: ErrorBudgetBurn 5 Days window
           annotations:
+            summary: "5% error budget consumption every 6 hours"
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
             sum(http_server_requests_seconds_count:burnrate30m{job="planetarium-app"}) > (6.00 * (1-0.99900))
@@ -39,6 +41,7 @@ spec:
 
         - alert: ErrorBudgetBurn 10 Days window
           annotations:
+            summary: "10% error budget consumption every 1 day"
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
             sum(http_server_requests_seconds_count:burnrate2h{job="planetarium-app"}) > (3.00 * (1-0.99900))
@@ -51,6 +54,7 @@ spec:
 
         - alert: ErrorBudgetBurn 30 Days window
           annotations:
+            summary: "10% error budget consumption ever 3 days"
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
             sum(http_server_requests_seconds_count:burnrate6h{job="planetarium-app"}) > (1.00 * (1-0.99900))

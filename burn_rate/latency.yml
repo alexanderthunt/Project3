@@ -10,6 +10,7 @@ spec:
       rules:
         - alert: LatencyBudgetBurn 2 Days window
           annotations:
+            summary: "2% error budget consumption every 1 hour"
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
 
           ##
@@ -34,6 +35,7 @@ spec:
 
         - alert: LatencyBudgetBurn 5 Days window
           annotations:
+            summary: "5% error budget consumption every 6 hours"
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
             (
@@ -52,6 +54,7 @@ spec:
 
         - alert: LatencyBudgetBurn 10 Days window
           annotations:
+            summary: "10% error budget consumption every 1 day"
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
             (
@@ -70,6 +73,7 @@ spec:
 
         - alert: LatencyBudgetBurn 30 Days window
           annotations:
+            summary: "10% error budget consumption every 3 days"
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
             (
