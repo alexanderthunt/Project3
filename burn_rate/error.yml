@@ -8,7 +8,7 @@ spec:
   groups:
     - name: SLOs-http_server_requests_seconds_count
       rules:
-        - alert: ErrorBudgetBurn
+        - alert: ErrorBudgetBurn 2 Days window
           annotations:
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
@@ -19,7 +19,8 @@ spec:
           labels:
             job: planetarium-app
             severity: critical
-        - alert: ErrorBudgetBurn
+
+        - alert: ErrorBudgetBurn 5 Days window
           annotations:
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
@@ -30,7 +31,8 @@ spec:
           labels:
             job: planetarium-app
             severity: critical
-        - alert: ErrorBudgetBurn
+
+        - alert: ErrorBudgetBurn 10 Days window
           annotations:
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
@@ -41,7 +43,8 @@ spec:
           labels:
             job: planetarium-app
             severity: warning
-        - alert: ErrorBudgetBurn
+
+        - alert: ErrorBudgetBurn 30 Days window
           annotations:
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
@@ -52,6 +55,7 @@ spec:
           labels:
             job: planetarium-app
             severity: warning
+
         - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[1d]))
             /
@@ -59,6 +63,7 @@ spec:
           labels:
             job: planetarium-app
           record: http_server_requests_seconds_count:burnrate1d
+
         - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[1h]))
             /
@@ -66,6 +71,7 @@ spec:
           labels:
             job: planetarium-app
           record: http_server_requests_seconds_count:burnrate1h
+
         - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[2h]))
             /
@@ -73,6 +79,7 @@ spec:
           labels:
             job: planetarium-app
           record: http_server_requests_seconds_count:burnrate2h
+
         - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[30m]))
             /
@@ -80,6 +87,7 @@ spec:
           labels:
             job: planetarium-app
           record: http_server_requests_seconds_count:burnrate30m
+
         - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[3d]))
             /
@@ -87,6 +95,7 @@ spec:
           labels:
             job: planetarium-app
           record: http_server_requests_seconds_count:burnrate3d
+
         - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[5m]))
             /
@@ -94,6 +103,7 @@ spec:
           labels:
             job: planetarium-app
           record: http_server_requests_seconds_count:burnrate5m
+
         - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[6h]))
             /
