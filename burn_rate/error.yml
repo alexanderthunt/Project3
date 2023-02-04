@@ -11,7 +11,7 @@ spec:
         - alert: ErrorBudgetBurn 2 Days window
           annotations:
             summary: "2% error budget consumption every 1 hour"
-            description: "Failure rate of 1.44 or higher"
+            description: "Failure rate of 2.88 or higher"
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
 
           ##
@@ -19,9 +19,9 @@ spec:
           ##
 
           expr: |
-            http_server_requests_seconds_count:burnrate5m > (14.4 * 0.1)
+            http_server_requests_seconds_count:burnrate5m > (14.4 * 0.2)
             and
-            http_server_requests_seconds_count:burnrate1h > (14.4 * 0.1)
+            http_server_requests_seconds_count:burnrate1h > (14.4 * 0.2)
           for: 2m
           labels:
             job: planetarium-app
@@ -30,12 +30,12 @@ spec:
         - alert: ErrorBudgetBurn 5 Days window
           annotations:
             summary: "5% error budget consumption every 6 hours"
-            description: "Failure rate of 0.6 or higher"
+            description: "Failure rate of 1.2 or higher"
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
-            http_server_requests_seconds_count:burnrate30m > (6 * 0.1)
+            http_server_requests_seconds_count:burnrate30m > (6 * 0.2)
             and
-            http_server_requests_seconds_count:burnrate6h > (6 * 0.1)
+            http_server_requests_seconds_count:burnrate6h > (6 * 0.2)
           for: 15m
           labels:
             job: planetarium-app
@@ -44,12 +44,12 @@ spec:
         - alert: ErrorBudgetBurn 10 Days window
           annotations:
             summary: "10% error budget consumption every 1 day"
-            description: "Failure rate of 0.3 or higher"
+            description: "Failure rate of 0.6 or higher"
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
-            http_server_requests_seconds_count:burnrate2h > (3 * 0.1)
+            http_server_requests_seconds_count:burnrate2h > (3 * 0.2)
             and
-            http_server_requests_seconds_count:burnrate1d > (3 * 0.1)
+            http_server_requests_seconds_count:burnrate1d > (3 * 0.2)
           for: 1h
           labels:
             job: planetarium-app
@@ -58,12 +58,12 @@ spec:
         - alert: ErrorBudgetBurn 30 Days window
           annotations:
             summary: "10% error budget consumption ever 3 days"
-            description: "Failure rate of 0.1 or higher"
+            description: "Failure rate of 0.2 or higher"
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
-            http_server_requests_seconds_count:burnrate6h > (1 * 0.1)
+            http_server_requests_seconds_count:burnrate6h > (1 * 0.2)
             and
-            http_server_requests_seconds_count:burnrate3d > (1 * 0.1)
+            http_server_requests_seconds_count:burnrate3d > (1 * 0.2)
           for: 3h
           labels:
             job: planetarium-app

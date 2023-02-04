@@ -24,7 +24,11 @@ spec:
         ############################
 
         - alert: Latency 5m Interval
-          expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[5m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[5m])) > .2
+          expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[5m]))
+            > .2
           labels:
             severity: critical
           annotations:
@@ -32,7 +36,11 @@ spec:
             description: "Prometheus has detected the green application latency is over 200ms"
 
         - alert: Latency 15m Interval
-          expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[15m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[15m])) > .2
+          expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[15m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[15m]))
+            > .2
           labels:
             severity: critical
           annotations:
@@ -40,7 +48,11 @@ spec:
             description: "Prometheus has detected the green application latency is over 200ms"
 
         - alert: Latency 30m Interval
-          expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[30m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[30m])) > .2
+          expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[30m]))
+            > .2
           labels:
             severity: critical
           annotations:
@@ -48,7 +60,11 @@ spec:
             description: "Prometheus has detected the green application latency is over 200ms"
 
         - alert: Latency 60m Interval
-          expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[60m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[60m])) > .2
+          expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[60m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[60m]))
+            > .2
           labels:
             severity: critical
           annotations:
@@ -59,36 +75,51 @@ spec:
         ############################
 
         - alert: Success Rate 5m Interval
-          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[5m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[5m])) < .999
+          expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[5m]))
+            < .998
           labels:
             severity: critical
           annotations:
-            summary: "Green success rate is below 99.9% within 5m interval"
-            description: "Prometheus has detected the green application success rate is below 99.9%"
+            summary: "Green success rate is below 99.8% within 5m interval"
+            description: "Prometheus has detected the green application success rate is below 99.8%"
 
         - alert: Success Rate 15m Interval
-          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[15m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[15m])) < .999
+          expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[15m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[15m]))
+            < .998
           labels:
             severity: critical
           annotations:
-            summary: "Green success rate is below 99.9% within 15m interval"
-            description: "Prometheus has detected the green application success rate is below 99.9%"
+            summary: "Green success rate is below 99.8% within 15m interval"
+            description: "Prometheus has detected the green application success rate is below 99.8%"
 
         - alert: Success Rate 30m Interval
-          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[30m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[30m])) < .999
+          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[30m]))
+            < .998
           labels:
             severity: critical
           annotations:
-            summary: "Green success rate is below 99.9% within 30m interval"
-            description: "Prometheus has detected the green application success rate is below 99.9%"
+            summary: "Green success rate is below 99.8% within 30m interval"
+            description: "Prometheus has detected the green application success rate is below 99.8%"
 
         - alert: Success Rate 60m Interval
-          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[60m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[60m])) < .999
+          expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[60m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[60m]))
+            < .998
           labels:
             severity: critical
           annotations:
-            summary: "Green success rate is below 99.9% within 60m interval"
-            description: "Prometheus has detected the green application success rate is below 99.9%"
+            summary: "Green success rate is below 99.8% within 60m interval"
+            description: "Prometheus has detected the green application success rate is below 99.8%"
 
         ############################
         ############################
