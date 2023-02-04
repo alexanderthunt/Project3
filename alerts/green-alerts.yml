@@ -1,156 +1,156 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-    name: green-alerts
-    labels:
-        release: prometheus
+  name: green-alerts
+  labels:
+    release: prometheus
 spec:
-    groups:
-        - name: Green
+  groups:
+    - name: Green
 
-          rules:
-              ############################
-              ############################
+      rules:
+        ############################
+        ############################
 
-              - alert: AppDown
-                expr: up{job="green-app"} != 1
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Green App is down"
-                    description: "Prometheus has detected the green application is not running"
+        - alert: AppDown
+          expr: up{job="green-app"} != 1
+          labels:
+            severity: critical
+          annotations:
+            summary: "Green App is down"
+            description: "Prometheus has detected the green application is not running"
 
-              ############################
-              ############################
+        ############################
+        ############################
 
-              - alert: Latency 5m Interval
-                expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[5m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[5m])) > .2
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Green latency is over 200ms within 5m interval"
-                    description: "Prometheus has detected the green application latency is over 200ms"
+        - alert: Latency 5m Interval
+          expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[5m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[5m])) > .2
+          labels:
+            severity: critical
+          annotations:
+            summary: "Green latency is over 200ms within 5m interval"
+            description: "Prometheus has detected the green application latency is over 200ms"
 
-              - alert: Latency 15m Interval
-                expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[15m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[15m])) > .2
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Green latency is over 200ms within 15m interval"
-                    description: "Prometheus has detected the green application latency is over 200ms"
+        - alert: Latency 15m Interval
+          expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[15m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[15m])) > .2
+          labels:
+            severity: critical
+          annotations:
+            summary: "Green latency is over 200ms within 15m interval"
+            description: "Prometheus has detected the green application latency is over 200ms"
 
-              - alert: Latency 30m Interval
-                expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[30m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[30m])) > .2
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Green latency is over 200ms within 30m interval"
-                    description: "Prometheus has detected the green application latency is over 200ms"
+        - alert: Latency 30m Interval
+          expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[30m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[30m])) > .2
+          labels:
+            severity: critical
+          annotations:
+            summary: "Green latency is over 200ms within 30m interval"
+            description: "Prometheus has detected the green application latency is over 200ms"
 
-              - alert: Latency 60m Interval
-                expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[60m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[60m])) > .2
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Green latency is over 200ms within 60m interval"
-                    description: "Prometheus has detected the green application latency is over 200ms"
+        - alert: Latency 60m Interval
+          expr: sum(rate(http_server_requests_seconds_sum{job="green-app"}[60m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[60m])) > .2
+          labels:
+            severity: critical
+          annotations:
+            summary: "Green latency is over 200ms within 60m interval"
+            description: "Prometheus has detected the green application latency is over 200ms"
 
-              ############################
-              ############################
+        ############################
+        ############################
 
-              - alert: Success Rate 5m Interval
-                expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[5m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[5m])) < .999
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Green success rate is below 99.9% within 5m interval"
-                    description: "Prometheus has detected the green application success rate is below 99.9%"
+        - alert: Success Rate 5m Interval
+          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[5m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[5m])) < .999
+          labels:
+            severity: critical
+          annotations:
+            summary: "Green success rate is below 99.9% within 5m interval"
+            description: "Prometheus has detected the green application success rate is below 99.9%"
 
-              - alert: Success Rate 15m Interval
-                expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[15m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[15m])) < .999
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Green success rate is below 99.9% within 15m interval"
-                    description: "Prometheus has detected the green application success rate is below 99.9%"
+        - alert: Success Rate 15m Interval
+          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[15m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[15m])) < .999
+          labels:
+            severity: critical
+          annotations:
+            summary: "Green success rate is below 99.9% within 15m interval"
+            description: "Prometheus has detected the green application success rate is below 99.9%"
 
-              - alert: Success Rate 30m Interval
-                expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[30m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[30m])) < .999
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Green success rate is below 99.9% within 30m interval"
-                    description: "Prometheus has detected the green application success rate is below 99.9%"
+        - alert: Success Rate 30m Interval
+          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[30m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[30m])) < .999
+          labels:
+            severity: critical
+          annotations:
+            summary: "Green success rate is below 99.9% within 30m interval"
+            description: "Prometheus has detected the green application success rate is below 99.9%"
 
-              - alert: Success Rate 60m Interval
-                expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[60m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[60m])) < .999
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Green success rate is below 99.9% within 60m interval"
-                    description: "Prometheus has detected the green application success rate is below 99.9%"
+        - alert: Success Rate 60m Interval
+          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[60m])) / sum(rate(http_server_requests_seconds_count{job="green-app"}[60m])) < .999
+          labels:
+            severity: critical
+          annotations:
+            summary: "Green success rate is below 99.9% within 60m interval"
+            description: "Prometheus has detected the green application success rate is below 99.9%"
 
-              ############################
-              ############################
+        ############################
+        ############################
 
-              - alert: Spike in CPU Usage
-                expr: irate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[5m]) > 0.2
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "Spike in CPU Usage Detected"
-                    description: "Prometheus has detected one of the green app has High CPU usage"
+        - alert: Spike in CPU Usage
+          expr: irate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[5m]) > 0.2
+          labels:
+            severity: critical
+          annotations:
+            summary: "Spike in CPU Usage Detected"
+            description: "Prometheus has detected one of the green app has High CPU usage"
 
-              - alert: High CPU Usage 5m Interval
-                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[5m]) > 0.15
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the green app has High CPU usage"
+        - alert: High CPU Usage 5m Interval
+          expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[5m]) > 0.15
+          labels:
+            severity: critical
+          annotations:
+            summary: "High CPU Usage Detected"
+            description: "Prometheus has detected one of the green app has High CPU usage"
 
-              - alert: High CPU Usage 10m Interval
-                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[10m]) > 0.15
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the green app has High CPU usage"
+        - alert: High CPU Usage 10m Interval
+          expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[10m]) > 0.15
+          labels:
+            severity: critical
+          annotations:
+            summary: "High CPU Usage Detected"
+            description: "Prometheus has detected one of the green app has High CPU usage"
 
-              - alert: High CPU Usage 15m Interval
-                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[15m]) > 0.15
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the green app has High CPU usage"
+        - alert: High CPU Usage 15m Interval
+          expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[15m]) > 0.15
+          labels:
+            severity: critical
+          annotations:
+            summary: "High CPU Usage Detected"
+            description: "Prometheus has detected one of the green app has High CPU usage"
 
-              - alert: High CPU Usage 30m Interval
-                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[30m]) > 0.15
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the green app has High CPU usage"
+        - alert: High CPU Usage 30m Interval
+          expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[30m]) > 0.15
+          labels:
+            severity: critical
+          annotations:
+            summary: "High CPU Usage Detected"
+            description: "Prometheus has detected one of the green app has High CPU usage"
 
-              - alert: High CPU Usage 60m Interval
-                expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[60m]) > 0.15
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High CPU Usage Detected"
-                    description: "Prometheus has detected one of the green app has High CPU usage"
+        - alert: High CPU Usage 60m Interval
+          expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[60m]) > 0.15
+          labels:
+            severity: critical
+          annotations:
+            summary: "High CPU Usage Detected"
+            description: "Prometheus has detected one of the green app has High CPU usage"
 
-              ############################
-              ############################
-              ## Fires an alert when current memory usage is above ~384 MB
+        ############################
+        ############################
+        ## Fires an alert when current memory usage is above ~384 MB
 
-              - alert: High memory Usage
-                expr: container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-green.*"} > 400000000
-                labels:
-                    severity: critical
-                annotations:
-                    summary: "High memory Usage Detected"
-                    description: "Prometheus has detected one of the green app has High memory usage"
+        - alert: High memory Usage
+          expr: container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-green.*"} > 400000000
+          labels:
+            severity: critical
+          annotations:
+            summary: "High memory Usage Detected"
+            description: "Prometheus has detected one of the green app has High memory usage"
 
-              ############################
+        ############################

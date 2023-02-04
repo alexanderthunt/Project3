@@ -11,6 +11,6 @@ spec:
       app: planetarium
       job: green-app
   endpoints:
-  - port: http
-    path: /actuator/prometheus
-    interval: 10s
+    - port: http
+      path: /actuator/prometheus
+      interval: 10s
