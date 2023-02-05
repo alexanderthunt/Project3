@@ -57,7 +57,7 @@ spec:
 
         - alert: ErrorBudgetBurn 30 Days window
           annotations:
-            summary: "10% error budget consumption ever 3 days"
+            summary: "10% error budget consumption every 3 days"
             description: "Failure rate of 0.2 or higher"
             message: "High error budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
