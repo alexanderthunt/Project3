@@ -10,11 +10,18 @@ spec:
       rules:
         - alert: LatencyBudgetBurn 2 Days window
           annotations:
+            summary: "2% error budget consumption every 1 hour"
+            description: "Failure rate of 2.88 or higher"
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
+
+          ##
+          ## Alert fires if the failure rate is greater than burn-rate multiplied by the allowed failure rate
+          ##
+
           expr: |
-            latencytarget:http_server_requests_seconds:rate1h{job="planetarium-app"} > (14.4*0.1)
+            latencytarget:http_server_requests_seconds:rate5m > (14.4 * 0.2)
             and
-            latencytarget:http_server_requests_seconds:rate5m{job="planetarium-app"} > (14.4*0.1)
+            latencytarget:http_server_requests_seconds:rate1h > (14.4 * 0.2)
           for: 2m
           labels:
             job: planetarium-app
@@ -22,11 +29,13 @@ spec:
 
         - alert: LatencyBudgetBurn 5 Days window
           annotations:
+            summary: "5% error budget consumption every 6 hours"
+            description: "Failure rate of 1.2 or higher"
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
-            latencytarget:http_server_requests_seconds:rate6h{job="planetarium-app"} > (6*0.1)
+            latencytarget:http_server_requests_seconds:rate30m > (6 * 0.2)
             and
-            latencytarget:http_server_requests_seconds:rate30m{job="planetarium-app"} > (6*0.1)
+            latencytarget:http_server_requests_seconds:rate6h > (6 * 0.2)
           for: 15m
           labels:
             job: planetarium-app
@@ -34,11 +43,13 @@ spec:
 
         - alert: LatencyBudgetBurn 10 Days window
           annotations:
+            summary: "10% error budget consumption every 1 day"
+            description: "Failure rate of 0.6 or higher"
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
-            latencytarget:http_server_requests_seconds:rate1d{job="planetarium-app"} > (3*0.1)
+            latencytarget:http_server_requests_seconds:rate2h > (3 * 0.2)
             and
-            latencytarget:http_server_requests_seconds:rate2h{job="planetarium-app"} > (3*0.1)
+            latencytarget:http_server_requests_seconds:rate1d > (3 * 0.2)
           for: 1h
           labels:
             job: planetarium-app
@@ -46,68 +57,95 @@ spec:
 
         - alert: LatencyBudgetBurn 30 Days window
           annotations:
+            summary: "10% error budget consumption every 3 days"
+            description: "Failure rate of 0.2 or higher"
             message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
           expr: |
-            latencytarget:http_server_requests_seconds:rate3d{job="planetarium-app"} > (0.1)
+            latencytarget:http_server_requests_seconds:rate6h > (1 * 0.2)
             and
-            latencytarget:http_server_requests_seconds:rate6h{job="planetarium-app"} > (0.1)
+            latencytarget:http_server_requests_seconds:rate3d > (1 * 0.2)
           for: 3h
           labels:
             job: planetarium-app
             severity: warning
 
+          ##
+          ## Returns the failure rate of responses that are greater than 201 ms response time
+          ##
+
         - expr: |
-            sum(rate(http_server_requests_seconds_sum{job="planetarium-app", status!~"5.."}[5m]))
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[5m]))
             /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m]))
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m])))
+            ) * 100
           labels:
             job: planetarium-app
           record: latencytarget:http_server_requests_seconds:rate5m
 
         - expr: |
-            sum(rate(http_server_requests_seconds_sum{job="planetarium-app", status!~"5.."}[30m]))
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[30m]))
             /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[30m]))
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[30m])))
+            ) * 100
           labels:
             job: planetarium-app
           record: latencytarget:http_server_requests_seconds:rate30m
 
         - expr: |
-            sum(rate(http_server_requests_seconds_sum{job="planetarium-app", status!~"5.."}[1h]))
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[1h]))
             /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1h]))
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1h])))
+            ) * 100
           labels:
             job: planetarium-app
           record: latencytarget:http_server_requests_seconds:rate1h
 
         - expr: |
-            sum(rate(http_server_requests_seconds_sum{job="planetarium-app", status!~"5.."}[2h]))
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[2h]))
             /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[2h]))
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[2h])))
+            ) * 100
           labels:
             job: planetarium-app
           record: latencytarget:http_server_requests_seconds:rate2h
 
         - expr: |
-            sum(rate(http_server_requests_seconds_sum{job="planetarium-app", status!~"5.."}[6h]))
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[6h]))
             /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[6h]))
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[6h])))
+            ) * 100
           labels:
             job: planetarium-app
           record: latencytarget:http_server_requests_seconds:rate6h
 
         - expr: |
-            sum(rate(http_server_requests_seconds_sum{job="planetarium-app", status!~"5.."}[1d]))
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[1d]))
             /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1d]))
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1d])))
+            ) * 100
           labels:
             job: planetarium-app
           record: latencytarget:http_server_requests_seconds:rate1d
 
         - expr: |
-            sum(rate(http_server_requests_seconds_sum{job="planetarium-app", status!~"5.."}[3d]))
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[3d]))
             /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[3d]))
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[3d])))
+            ) * 100
           labels:
             job: planetarium-app
           record: latencytarget:http_server_requests_seconds:rate3d

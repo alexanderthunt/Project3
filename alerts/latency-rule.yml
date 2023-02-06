@@ -9,7 +9,11 @@ spec:
     - name: Latency
       rules:
         - alert: Latency 5m Interval
-          expr: sum(rate(http_server_requests_seconds_sum{job="planetarium-app"}[5m])) / sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m])) > .2
+          expr: |
+            sum(rate(http_server_requests_seconds_sum{job="planetarium-app"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m]))
+            > .2
           labels:
             severity: critical
           annotations:
@@ -17,7 +21,11 @@ spec:
             description: "Prometheus has detected the application latency is over 200ms"
 
         - alert: Latency 15m Interval
-          expr: sum(rate(http_server_requests_seconds_sum{job="planetarium-app"}[15m])) / sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[15m])) > .2
+          expr: |
+            sum(rate(http_server_requests_seconds_sum{job="planetarium-app"}[15m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[15m]))
+            > .2
           labels:
             severity: critical
           annotations:
@@ -25,7 +33,11 @@ spec:
             description: "Prometheus has detected the application latency is over 200ms"
 
         - alert: Latency 30m Interval
-          expr: sum(rate(http_server_requests_seconds_sum{job="planetarium-app"}[30m])) / sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[30m])) > .2
+          expr: |
+            sum(rate(http_server_requests_seconds_sum{job="planetarium-app"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[30m]))
+            > .2
           labels:
             severity: critical
           annotations:
@@ -33,7 +45,11 @@ spec:
             description: "Prometheus has detected the application latency is over 200ms"
 
         - alert: Latency 60m Interval
-          expr: sum(rate(http_server_requests_seconds_sum{job="planetarium-app"}[60m])) / sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[60m])) > .2
+          expr: |
+            sum(rate(http_server_requests_seconds_sum{job="planetarium-app"}[60m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[60m]))
+             > .2
           labels:
             severity: critical
           annotations:
