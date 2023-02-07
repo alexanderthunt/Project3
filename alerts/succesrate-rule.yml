@@ -8,50 +8,34 @@ spec:
   groups:
     - name: Success Rate
       rules:
-        - alert: Success Rate 5m Interval
-          expr: |
+        - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app", outcome!="SERVER_ERROR"}[5m]))
             /
             sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m]))
-            < .998
           labels:
-            severity: critical
-          annotations:
-            summary: "Success rate is below 99.8% within 5m interval"
-            description: "Prometheus has detected the application success rate is below 99.8%"
+            job: planetarium-app
+          record: successrate:rate5m
 
-        - alert: Success Rate 15m Interval
-          expr: |
+        - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app", outcome!="SERVER_ERROR"}[15m]))
             /
             sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[15m]))
-            < .998
           labels:
-            severity: critical
-          annotations:
-            summary: "Success rate is below 99.8% within 15m interval"
-            description: "Prometheus has detected the application success rate is below 99.8%"
+            job: planetarium-app
+          record: successrate:rate15m
 
-        - alert: Success Rate 30m Interval
-          expr: |
+        - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app", outcome!="SERVER_ERROR"}[30m]))
             /
             sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[30m]))
-            < .998
           labels:
-            severity: critical
-          annotations:
-            summary: "Success rate is below 99.8% within 30m interval"
-            description: "Prometheus has detected the application success rate is below 99.8%"
+            job: planetarium-app
+          record: successrate:rate30m
 
-        - alert: Success Rate 60m Interval
-          expr: |
+        - expr: |
             sum(rate(http_server_requests_seconds_count{job="planetarium-app", outcome!="SERVER_ERROR"}[60m]))
             /
             sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[60m]))
-            < .998
           labels:
-            severity: critical
-          annotations:
-            summary: "Success rate is below 99.8% within 60m interval"
-            description: "Prometheus has detected the application success rate is below 99.8%"
+            job: planetarium-app
+          record: successrate:rate60m

@@ -25,11 +25,9 @@ spec:
 
         - alert: Latency 5m Interval
           expr: |
-            sum(rate(http_server_requests_seconds_sum{job="green-app"}[5m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="green-app"}[5m]))
-            > .2
+            latency:rate5m > .2
           labels:
+            job: green-app
             severity: critical
           annotations:
             summary: "Green latency is over 200ms within 5m interval"
@@ -37,11 +35,10 @@ spec:
 
         - alert: Latency 15m Interval
           expr: |
-            sum(rate(http_server_requests_seconds_sum{job="green-app"}[15m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="green-app"}[15m]))
+            latency:rate15m
             > .2
           labels:
+            job: green-app
             severity: critical
           annotations:
             summary: "Green latency is over 200ms within 15m interval"
@@ -49,11 +46,10 @@ spec:
 
         - alert: Latency 30m Interval
           expr: |
-            sum(rate(http_server_requests_seconds_sum{job="green-app"}[30m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="green-app"}[30m]))
+            latency:rate30m
             > .2
           labels:
+            job: green-app
             severity: critical
           annotations:
             summary: "Green latency is over 200ms within 30m interval"
@@ -61,11 +57,10 @@ spec:
 
         - alert: Latency 60m Interval
           expr: |
-            sum(rate(http_server_requests_seconds_sum{job="green-app"}[60m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="green-app"}[60m]))
+            latency:rate60m
             > .2
           labels:
+            job: green-app
             severity: critical
           annotations:
             summary: "Green latency is over 200ms within 60m interval"
@@ -76,11 +71,10 @@ spec:
 
         - alert: Success Rate 5m Interval
           expr: |
-            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[5m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="green-app"}[5m]))
+            successrate:rate5m
             < .998
           labels:
+            job: green-app
             severity: critical
           annotations:
             summary: "Green success rate is below 99.8% within 5m interval"
@@ -88,22 +82,21 @@ spec:
 
         - alert: Success Rate 15m Interval
           expr: |
-            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[15m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="green-app"}[15m]))
+            successrate:rate15m
             < .998
           labels:
+            job: green-app
             severity: critical
           annotations:
             summary: "Green success rate is below 99.8% within 15m interval"
             description: "Prometheus has detected the green application success rate is below 99.8%"
 
         - alert: Success Rate 30m Interval
-          expr: sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[30m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="green-app"}[30m]))
+          expr: |
+            successrate:rate30m
             < .998
           labels:
+            job: green-app
             severity: critical
           annotations:
             summary: "Green success rate is below 99.8% within 30m interval"
@@ -111,11 +104,10 @@ spec:
 
         - alert: Success Rate 60m Interval
           expr: |
-            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[60m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="green-app"}[60m]))
+            successrate:rate60m
             < .998
           labels:
+            job: green-app
             severity: critical
           annotations:
             summary: "Green success rate is below 99.8% within 60m interval"
@@ -185,3 +177,101 @@ spec:
             description: "Prometheus has detected one of the green app has High memory usage"
 
         ############################
+        ############################
+        ## Latency Recording Rules
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[5m]))
+          labels:
+            job: green-app
+          record: latency:rate5m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[15m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[15m]))
+          labels:
+            job: green-app
+          record: latency:rate15m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[30m]))
+          labels:
+            job: green-app
+          record: latency:rate30m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[60m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[60m]))
+          labels:
+            job: green-app
+          record: latency:rate60m
+
+        ############################
+        ############################
+        ## Success Rate Recording Rules
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[5m]))
+          labels:
+            job: green-app
+          record: successrate:rate5m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[15m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[15m]))
+          labels:
+            job: green-app
+          record: successrate:rate15m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[30m]))
+          labels:
+            job: green-app
+          record: successrate:rate30m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[60m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[60m]))
+          labels:
+            job: green-app
+          record: successrate:rate60m
+
+        ############################
+        ############################
+        ## 99 Percentile Latency Recording Rules
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="green-app"}[5m])))
+          labels:
+            job: green-app
+          record: latency99:rate5m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="green-app"}[15m])))
+          labels:
+            job: green-app
+          record: latency99:rate15m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="green-app"}[30m])))
+          labels:
+            job: green-app
+          record: latency99:rate30m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="green-app"}[60m])))
+          labels:
+            job: green-app
+          record: latency99:rate60m
