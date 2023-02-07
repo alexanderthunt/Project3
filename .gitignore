@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,maven,java
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,maven,java
+# Created by https://www.toptal.com/developers/gitignore/api/terraform,maven,java,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=terraform,maven,java,visualstudiocode
 
 ### Java ###
 # Compiled class file
@@ -46,6 +46,42 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+### Terraform ###
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, which are likely to contain sensitive data, such as
+# password, private keys, and other secrets. These should not be part of version
+# control as they are data points which are potentially sensitive and subject
+# to change depending on the environment.
+*.tfvars
+*.tfvars.json
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+# !example_override.tf
+
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+# example: *tfplan*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -65,5 +101,4 @@ buildNumber.properties
 .history
 .ionide
 
-
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,maven,java
+# End of https://www.toptal.com/developers/gitignore/api/terraform,maven,java,visualstudiocode

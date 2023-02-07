@@ -12,6 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/affinity-mode: balanced
 spec:
+  ingressClassName: nginx
   rules:
     - http:
         paths:
