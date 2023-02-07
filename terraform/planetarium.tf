@@ -1,3 +1,5 @@
+## Kubernetes Secret
+
 resource "kubernetes_manifest" "secret_planetarium" {
   manifest = {
     "apiVersion" = "v1"
@@ -15,6 +17,8 @@ resource "kubernetes_manifest" "secret_planetarium" {
   }
 }
 
+## Kubernetes ClusterIP
+
 resource "kubernetes_manifest" "service_planetarium_clusterip" {
   manifest = {
     "apiVersion" = "v1"
@@ -23,7 +27,6 @@ resource "kubernetes_manifest" "service_planetarium_clusterip" {
       "labels" = {
         "app"  = "planetarium"
         "job"  = "planetarium-app"
-        "role" = "blue"
       }
       "name"      = "planetarium-clusterip"
       "namespace" = "default"
@@ -39,12 +42,14 @@ resource "kubernetes_manifest" "service_planetarium_clusterip" {
       ]
       "selector" = {
         "app"  = "planetarium"
-        "role" = "blue"
+        "role" = "green"
       }
       "type" = "ClusterIP"
     }
   }
 }
+
+## Kubernetes ServiceMonitor
 
 resource "kubernetes_manifest" "servicemonitor_planetarium" {
   manifest = {
@@ -75,6 +80,8 @@ resource "kubernetes_manifest" "servicemonitor_planetarium" {
     }
   }
 }
+
+## Kubernetes Ingress
 
 resource "kubernetes_manifest" "ingress_planetarium" {
   manifest = {
