@@ -25,8 +25,8 @@ resource "kubernetes_manifest" "service_planetarium_clusterip" {
     "kind"       = "Service"
     "metadata" = {
       "labels" = {
-        "app"  = "planetarium"
-        "job"  = "planetarium-app"
+        "app" = "planetarium"
+        "job" = "planetarium-app"
       }
       "name"      = "planetarium-clusterip"
       "namespace" = "default"
