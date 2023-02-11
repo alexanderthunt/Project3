@@ -42,7 +42,7 @@ resource "kubernetes_manifest" "service_planetarium_clusterip" {
       ]
       "selector" = {
         "app"  = "planetarium"
-        "role" = "green"
+        "role" = "blue"
       }
       "type" = "ClusterIP"
     }
