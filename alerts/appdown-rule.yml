@@ -2,6 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: planetarium-prometheus-rules-appdown
+  namespace: "default"
   labels:
     release: prometheus
 spec:

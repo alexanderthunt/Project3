@@ -2,6 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: green-alerts
+  namespace: "default"
   labels:
     release: prometheus
 spec:
