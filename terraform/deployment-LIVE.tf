@@ -1,4 +1,4 @@
-## Promtail ConfigMap
+## Blue Promtail ConfigMap
 resource "kubernetes_manifest" "configmap_blue_promtail" {
   manifest = {
     "apiVersion" = "v1"
