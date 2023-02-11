@@ -218,7 +218,7 @@
 						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
-					"expr": "latencytarget:http_server_requests_seconds:rate30m{job=\"planetarium-app\"}",
+					"expr": "latencytarget:http_server_requests_seconds:rate30m",
 					"legendFormat": "__auto",
 					"range": true,
 					"refId": "A"
@@ -1409,6 +1409,6 @@
 	"timezone": "",
 	"title": "Planetarium Failure Rate",
 	"uid": "OsBUQ504z",
-	"version": 17,
+	"version": 18,
 	"weekStart": ""
 }

@@ -1409,8 +1409,7 @@
 						"mode": "absolute",
 						"steps": [
 							{
-								"color": "red",
-								"value": null
+								"color": "red"
 							},
 							{
 								"color": "green",
@@ -1501,8 +1500,7 @@
 						"mode": "absolute",
 						"steps": [
 							{
-								"color": "green",
-								"value": null
+								"color": "green"
 							},
 							{
 								"color": "red",
@@ -1584,7 +1582,7 @@
 			},
 			{
 				"current": {
-					"selected": true,
+					"selected": false,
 					"text": "blue-logs",
 					"value": "blue-logs"
 				},
