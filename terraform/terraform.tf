@@ -20,20 +20,17 @@ terraform {
 }
 
 ## EKS credential directory
-
 provider "kubernetes" {
   config_path = "~/.kube/config"
 }
 
 ## AWS credential
-
 provider "aws" {
   region  = "us-east-1"
   profile = "team-sol"
 }
 
 ## Module to create an S3 Bucket in AWS
-
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
   bucket = "team-sol-bucket"
@@ -50,4 +47,43 @@ module "s3_bucket" {
       }
     }
   }
+}
+
+## Provides configuration for Helm to connect to EKS
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
+
+## Installs Loki chart
+resource "helm_release" "loki" {
+  name  = "loki"
+  chart = "grafana/loki-stack"
+}
+
+## Installs Ingress-nginx chart
+resource "helm_release" "nginx" {
+  name  = "nginx"
+  chart = "ingress-nginx/ingress-nginx"
+}
+
+## Installs Prometheus chart
+resource "helm_release" "prometheus" {
+  name  = "prometheus"
+  chart = "prometheus-community/kube-prometheus-stack"
+
+  values = [
+    "${file("chart_values/prometheus-values.yml")}"
+  ]
+}
+
+## Installs Jenkins chart
+resource "helm_release" "jenkins" {
+  name  = "jenkins"
+  chart = "jenkins/jenkins"
+
+  values = [
+    "${file("chart_values/jenkins-values.yml")}"
+  ]
 }
