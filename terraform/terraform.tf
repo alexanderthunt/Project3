@@ -58,20 +58,23 @@ provider "helm" {
 
 ## Installs Loki chart
 resource "helm_release" "loki" {
-  name  = "loki"
-  chart = "grafana/loki-stack"
+  name       = "loki"
+  repository = "https://grafana.github.io/helm-charts/"
+  chart      = "grafana/loki-stack"
 }
 
 ## Installs Ingress-nginx chart
 resource "helm_release" "nginx" {
-  name  = "nginx"
-  chart = "ingress-nginx/ingress-nginx"
+  name       = "nginx"
+  repository = "https://kubernetes.github.io/ingress-nginx/"
+  chart      = "ingress-nginx/ingress-nginx"
 }
 
 ## Installs Prometheus chart
 resource "helm_release" "prometheus" {
-  name  = "prometheus"
-  chart = "prometheus-community/kube-prometheus-stack"
+  name       = "prometheus"
+  repository = "https://prometheus-community.github.io/helm-charts/"
+  chart      = "prometheus-community/kube-prometheus-stack"
 
   values = [
     "${file("chart_values/prometheus-values.yml")}"
@@ -80,8 +83,9 @@ resource "helm_release" "prometheus" {
 
 ## Installs Jenkins chart
 resource "helm_release" "jenkins" {
-  name  = "jenkins"
-  chart = "jenkins/jenkins"
+  name       = "jenkins"
+  repository = "https://charts.jenkins.io/"
+  chart      = "jenkins/jenkins"
 
   values = [
     "${file("chart_values/jenkins-values.yml")}"
