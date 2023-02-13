@@ -38,13 +38,13 @@
 			},
 			"id": 20,
 			"panels": [],
-			"title": "Latency Budget Burn",
+			"title": "Latency",
 			"type": "row"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -78,7 +78,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -91,10 +91,11 @@
 							},
 							{
 								"color": "red",
-								"value": 80
+								"value": 2.88
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -110,7 +111,7 @@
 					"calcs": [],
 					"displayMode": "list",
 					"placement": "bottom",
-					"showLegend": true
+					"showLegend": false
 				},
 				"tooltip": {
 					"mode": "single",
@@ -121,7 +122,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "latencytarget:http_server_requests_seconds:rate5m",
@@ -130,13 +131,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 5M",
+			"title": "Failure Rate 5M",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -170,7 +171,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -182,11 +183,12 @@
 								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "orange",
+								"value": 1.2
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -202,7 +204,7 @@
 					"calcs": [],
 					"displayMode": "list",
 					"placement": "bottom",
-					"showLegend": true
+					"showLegend": false
 				},
 				"tooltip": {
 					"mode": "single",
@@ -213,22 +215,22 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
-					"expr": "latencytarget:http_server_requests_seconds:rate30m{job=\"planetarium-app\"}",
+					"expr": "latencytarget:http_server_requests_seconds:rate30m",
 					"legendFormat": "__auto",
 					"range": true,
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 30M",
+			"title": "Failure Rate 30M",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -262,7 +264,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -275,10 +277,11 @@
 							},
 							{
 								"color": "red",
-								"value": 80
+								"value": 2.88
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -294,7 +297,7 @@
 					"calcs": [],
 					"displayMode": "list",
 					"placement": "bottom",
-					"showLegend": true
+					"showLegend": false
 				},
 				"tooltip": {
 					"mode": "single",
@@ -305,7 +308,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "latencytarget:http_server_requests_seconds:rate1h",
@@ -314,13 +317,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 1H",
+			"title": "Failure Rate 1H",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -354,7 +357,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -366,11 +369,12 @@
 								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "yellow",
+								"value": 0.6
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -386,7 +390,7 @@
 					"calcs": [],
 					"displayMode": "list",
 					"placement": "bottom",
-					"showLegend": true
+					"showLegend": false
 				},
 				"tooltip": {
 					"mode": "single",
@@ -397,7 +401,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "latencytarget:http_server_requests_seconds:rate2h",
@@ -406,13 +410,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 2H",
+			"title": "Failure Rate 2H",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -446,7 +450,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -458,11 +462,16 @@
 								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "blue",
+								"value": 0.2
+							},
+							{
+								"color": "orange",
+								"value": 1.2
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -490,7 +499,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "latencytarget:http_server_requests_seconds:rate6h",
@@ -499,13 +508,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 6H",
+			"title": "Failure Rate 6H",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -539,7 +548,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -551,11 +560,12 @@
 								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "yellow",
+								"value": 0.6
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -583,7 +593,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "latencytarget:http_server_requests_seconds:rate1d",
@@ -592,13 +602,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 1D",
+			"title": "Failure Rate 1D",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -632,7 +642,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -644,11 +654,12 @@
 								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "blue",
+								"value": 0.2
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -676,7 +687,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "latencytarget:http_server_requests_seconds:rate3d",
@@ -685,10 +696,11 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate per 3D",
+			"title": "Failure Rate per 3D",
 			"type": "timeseries"
 		},
 		{
+			"collapsed": false,
 			"gridPos": {
 				"h": 1,
 				"w": 24,
@@ -696,13 +708,14 @@
 				"y": 17
 			},
 			"id": 10,
-			"title": "Error Budget Burn",
+			"panels": [],
+			"title": "Requests",
 			"type": "row"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -736,7 +749,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -749,10 +762,11 @@
 							},
 							{
 								"color": "red",
-								"value": 80
+								"value": 2.88
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -780,7 +794,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "http_server_requests_seconds_count:burnrate5m",
@@ -790,13 +804,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 5M",
+			"title": "Failure Rate 5M",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -830,7 +844,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -842,11 +856,12 @@
 								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "orange",
+								"value": 1.2
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -874,7 +889,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "http_server_requests_seconds_count:burnrate30m",
@@ -883,13 +898,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 30M",
+			"title": "Failure Rate 30M",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -923,7 +938,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -936,10 +951,11 @@
 							},
 							{
 								"color": "red",
-								"value": 80
+								"value": 2.88
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -967,7 +983,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "http_server_requests_seconds_count:burnrate1h",
@@ -976,13 +992,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 1H",
+			"title": "Failure Rate 1H",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -1016,7 +1032,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -1028,11 +1044,12 @@
 								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "yellow",
+								"value": 0.6
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -1060,7 +1077,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "http_server_requests_seconds_count:burnrate2h",
@@ -1069,13 +1086,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 2H",
+			"title": "Failure Rate 2H",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -1109,7 +1126,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -1117,14 +1134,20 @@
 						"mode": "absolute",
 						"steps": [
 							{
-								"color": "green"
+								"color": "green",
+								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "blue",
+								"value": 0.2
+							},
+							{
+								"color": "orange",
+								"value": 1.2
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -1152,7 +1175,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "http_server_requests_seconds_count:burnrate6h",
@@ -1161,13 +1184,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 6H",
+			"title": "Failure Rate 6H",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -1201,7 +1224,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -1209,14 +1232,16 @@
 						"mode": "absolute",
 						"steps": [
 							{
-								"color": "green"
+								"color": "green",
+								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "yellow",
+								"value": 0.6
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -1244,7 +1269,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "http_server_requests_seconds_count:burnrate1d",
@@ -1253,13 +1278,13 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 1D",
+			"title": "Failure Rate 1D",
 			"type": "timeseries"
 		},
 		{
 			"datasource": {
 				"type": "prometheus",
-				"uid": "jJ3GKc04z"
+				"uid": "${prometheus}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -1293,7 +1318,7 @@
 							"mode": "none"
 						},
 						"thresholdsStyle": {
-							"mode": "off"
+							"mode": "dashed"
 						}
 					},
 					"mappings": [],
@@ -1301,14 +1326,16 @@
 						"mode": "absolute",
 						"steps": [
 							{
-								"color": "green"
+								"color": "green",
+								"value": null
 							},
 							{
-								"color": "red",
-								"value": 80
+								"color": "blue",
+								"value": 0.2
 							}
 						]
-					}
+					},
+					"unit": "percent"
 				},
 				"overrides": []
 			},
@@ -1336,7 +1363,7 @@
 				{
 					"datasource": {
 						"type": "prometheus",
-						"uid": "jJ3GKc04z"
+						"uid": "${prometheus}"
 					},
 					"editorMode": "builder",
 					"expr": "http_server_requests_seconds_count:burnrate3d",
@@ -1345,7 +1372,7 @@
 					"refId": "A"
 				}
 			],
-			"title": "Burn Rate 3D",
+			"title": "Failure Rate 3D",
 			"type": "timeseries"
 		}
 	],
@@ -1354,16 +1381,34 @@
 	"style": "dark",
 	"tags": [],
 	"templating": {
-		"list": []
+		"list": [
+			{
+				"current": {
+					"selected": false,
+					"text": "Prometheus",
+					"value": "Prometheus"
+				},
+				"hide": 2,
+				"includeAll": false,
+				"multi": false,
+				"name": "prometheus",
+				"options": [],
+				"query": "prometheus",
+				"refresh": 1,
+				"regex": "Prometheus",
+				"skipUrlSync": false,
+				"type": "datasource"
+			}
+		]
 	},
 	"time": {
-		"from": "now-15m",
+		"from": "now-1h",
 		"to": "now"
 	},
 	"timepicker": {},
 	"timezone": "",
-	"title": "Planetarium Burn Rate",
+	"title": "Planetarium Failure Rate",
 	"uid": "OsBUQ504z",
-	"version": 11,
+	"version": 18,
 	"weekStart": ""
 }
