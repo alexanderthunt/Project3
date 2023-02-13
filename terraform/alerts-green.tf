@@ -32,7 +32,7 @@ resource "kubernetes_manifest" "prometheusrule_green_alerts" {
                 "summary"     = "Green latency is over 200ms within 5m interval"
               }
               "expr" = <<-EOT
-              latency:rate5m > .2
+              latency:rate5m{job="green-app"} > .2
               
               EOT
               "labels" = {
@@ -47,8 +47,7 @@ resource "kubernetes_manifest" "prometheusrule_green_alerts" {
                 "summary"     = "Green latency is over 200ms within 15m interval"
               }
               "expr" = <<-EOT
-              latency:rate15m
-              > .2
+              latency:rate15m{job="green-app"} > .2
               
               EOT
               "labels" = {
@@ -63,8 +62,7 @@ resource "kubernetes_manifest" "prometheusrule_green_alerts" {
                 "summary"     = "Green latency is over 200ms within 30m interval"
               }
               "expr" = <<-EOT
-              latency:rate30m
-              > .2
+              latency:rate30m{job="green-app"} > .2
               
               EOT
               "labels" = {
@@ -79,8 +77,7 @@ resource "kubernetes_manifest" "prometheusrule_green_alerts" {
                 "summary"     = "Green latency is over 200ms within 60m interval"
               }
               "expr" = <<-EOT
-              latency:rate60m
-              > .2
+              latency:rate60m{job="green-app"} > .2
               
               EOT
               "labels" = {
@@ -95,8 +92,7 @@ resource "kubernetes_manifest" "prometheusrule_green_alerts" {
                 "summary"     = "Green success rate is below 99.8% within 5m interval"
               }
               "expr" = <<-EOT
-              successrate:rate5m
-              < .998
+              successrate:rate5m{job="green-app"} < .998
               
               EOT
               "labels" = {
@@ -111,8 +107,7 @@ resource "kubernetes_manifest" "prometheusrule_green_alerts" {
                 "summary"     = "Green success rate is below 99.8% within 15m interval"
               }
               "expr" = <<-EOT
-              successrate:rate15m
-              < .998
+              successrate:rate15m{job="green-app"} < .998
               
               EOT
               "labels" = {
@@ -127,8 +122,7 @@ resource "kubernetes_manifest" "prometheusrule_green_alerts" {
                 "summary"     = "Green success rate is below 99.8% within 30m interval"
               }
               "expr" = <<-EOT
-              successrate:rate30m
-              < .998
+              successrate:rate30m{job="green-app"} < .998
               
               EOT
               "labels" = {
@@ -143,8 +137,7 @@ resource "kubernetes_manifest" "prometheusrule_green_alerts" {
                 "summary"     = "Green success rate is below 99.8% within 60m interval"
               }
               "expr" = <<-EOT
-              successrate:rate60m
-              < .998
+              successrate:rate60m{job="green-app"} < .998
               
               EOT
               "labels" = {

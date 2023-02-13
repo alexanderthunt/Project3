@@ -26,7 +26,7 @@ spec:
 
         - alert: Latency 5m Interval
           expr: |
-            latency:rate5m > .2
+            latency:rate5m{job="green-app"} > .2
           labels:
             job: green-app
             severity: critical
@@ -36,8 +36,7 @@ spec:
 
         - alert: Latency 15m Interval
           expr: |
-            latency:rate15m
-            > .2
+            latency:rate15m{job="green-app"} > .2
           labels:
             job: green-app
             severity: critical
@@ -47,8 +46,7 @@ spec:
 
         - alert: Latency 30m Interval
           expr: |
-            latency:rate30m
-            > .2
+            latency:rate30m{job="green-app"} > .2
           labels:
             job: green-app
             severity: critical
@@ -58,8 +56,7 @@ spec:
 
         - alert: Latency 60m Interval
           expr: |
-            latency:rate60m
-            > .2
+            latency:rate60m{job="green-app"} > .2
           labels:
             job: green-app
             severity: critical
@@ -72,8 +69,7 @@ spec:
 
         - alert: Success Rate 5m Interval
           expr: |
-            successrate:rate5m
-            < .998
+            successrate:rate5m{job="green-app"} < .998
           labels:
             job: green-app
             severity: critical
@@ -83,8 +79,7 @@ spec:
 
         - alert: Success Rate 15m Interval
           expr: |
-            successrate:rate15m
-            < .998
+            successrate:rate15m{job="green-app"} < .998
           labels:
             job: green-app
             severity: critical
@@ -94,8 +89,7 @@ spec:
 
         - alert: Success Rate 30m Interval
           expr: |
-            successrate:rate30m
-            < .998
+            successrate:rate30m{job="green-app"} < .998
           labels:
             job: green-app
             severity: critical
@@ -105,8 +99,7 @@ spec:
 
         - alert: Success Rate 60m Interval
           expr: |
-            successrate:rate60m
-            < .998
+            successrate:rate60m{job="green-app"} < .998
           labels:
             job: green-app
             severity: critical
