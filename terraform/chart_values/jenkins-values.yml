@@ -11,6 +11,13 @@ controller:
     - pipeline-stage-view
     - timestamper
     - github
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "256Mi"
+    limits:
+      cpu: "2000m"
+      memory: "4096Mi"
 
   JCasC:
     defaultConfig: true
@@ -33,3 +40,10 @@ agent:
         - name: docker
           image: docker:18-dind
           privileged: true
+  resources:
+    requests:
+      cpu: "512m"
+      memory: "512Mi"
+    limits:
+      cpu: "512m"
+      memory: "512Mi"
