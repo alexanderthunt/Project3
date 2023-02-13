@@ -1,19 +1,40 @@
-alertmanager:
-  config:
-    global:
-      smtp_from: Grafana
-      smtp_smarthost: "smtp.gmail.com:587"
-      smtp_auth_username: email_username
-      smtp_auth_password: email_password
-  alertmanagerSpec:
-    useExistingSecret: true
-    secrets:
-      - grafana-email
+# alertmanager:
+#  config:
+#    global:
+#       resolve_timeout: 5m
+#     route:
+#       receiver: email-receiver
+#       group_by: [alertname, cluster, namespace]
+#       group_wait: 30s
+#       group_interval: 5m
+#       repeat_interval: 4h
+#     receivers:
+#     - name: email-receiver
+#       email_configs:
+#       - to: recipient1@example.com
+#         to: recipient2@example.com
+#         from: sender@example.com
+#         smarthost: smtp.example.com:587
+#         auth_username: sender@example.com
+#         auth_password: ((smtp_password))
+#         require_tls: true
+#     secrets:
+#     - name: smtp-secret
+#       key: smtp_password
+#       secret: smtp-credentials
 
 grafana:
   namespaceOverride: default
   adminPassword: teamsol
   grafana.ini:
+    smtp:
+      enabled: "true"
+      host: "smtp.gmail.com:465"
+      user: "revteamsol@gmail.com"
+      password: "teamsol+revature"
+      skip_verify: "true"
+      from_address: "revteamsol@gmail.com"
+      from_name: "Grafana"
     server:
       serve_from_sub_path: "true"
       root_url: "%(protocol)s://%(domain)s:/grafana/" # this lets Kubernetes auto set root_url value
