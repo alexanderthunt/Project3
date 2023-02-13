@@ -27,17 +27,19 @@ grafana:
   namespaceOverride: default
   adminPassword: teamsol
   grafana.ini:
-    smtp:
-      enabled: "true"
-      host: "smtp.gmail.com:465"
-      user: "revteamsol@gmail.com"
-      password: "teamsol+revature"
-      skip_verify: "true"
-      from_address: "revteamsol@gmail.com"
-      from_name: "Grafana"
     server:
       serve_from_sub_path: "true"
       root_url: "%(protocol)s://%(domain)s:/grafana/" # this lets Kubernetes auto set root_url value
+    smtp:
+      enabled: true
+      host: "smtp.office365.com:587"
+      skip_verify: false
+      from_address: "revteamsol@outlook.com"
+      from_name: "Grafana"
+  smtp:
+    existingSecret: "grafana-email"
+    userKey: "email_username"
+    passwordKey: "email_password"
 
   ingress:
     enabled: true
