@@ -87,3 +87,21 @@ resource "helm_release" "jenkins" {
     "${file("chart_values/jenkins-values.yml")}"
   ]
 }
+
+## Grafana E-mail Secret
+
+resource "kubernetes_manifest" "grafana-email" {
+  manifest = {
+    "apiVersion" = "v1"
+    "data" = {
+      "email_username" = var.email_username
+      "email_password" = var.email_password
+    }
+    "kind" = "Secret"
+    "metadata" = {
+      "name"      = "grafana-email"
+      "namespace" = "default"
+    }
+    "type" = "Opaque"
+  }
+}

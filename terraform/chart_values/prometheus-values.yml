@@ -1,3 +1,15 @@
+alertmanager:
+  config:
+    global:
+      smtp_from: Grafana
+      smtp_smarthost: "smtp.gmail.com:587"
+      smtp_auth_username: email_username
+      smtp_auth_password: email_password
+  alertmanagerSpec:
+    useExistingSecret: true
+    secrets:
+      - grafana-email
+
 grafana:
   namespaceOverride: default
   adminPassword: teamsol
