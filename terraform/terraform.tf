@@ -79,6 +79,51 @@ resource "helm_release" "prometheus" {
   values = [
     "${file("chart_values/prometheus-values.yml")}"
   ]
+
+  set {
+    name  = "alertmanager.config.global.smtp_auth_password"
+    value = var.email_password
+  }
+
+  set {
+    name  = "alertmanager.config.global.smtp_auth_username"
+    value = var.email_username
+  }
+
+  set {
+    name  = "alertmanager.config.global.smtp_from"
+    value = var.email_username
+  }
+
+  set {
+    name  = "alertmanager.config.receivers[1].email_configs[0].to"
+    value = var.email_address
+  }
+
+  set {
+    name  = "alertmanager.ingress.host[0]"
+    value = var.load_balancer
+  }
+
+  set {
+    name  = "alertmanager.alertmanagerSpec.externalUrl"
+    value = var.alert_manager
+  }
+
+  set {
+    name  = "grafana.grafana\\.ini.smtp.user"
+    value = var.email_username
+  }
+
+  set {
+    name  = "grafana.grafana\\.ini.smtp.password"
+    value = var.email_password
+  }
+
+  set {
+    name  = "grafana.grafana\\.ini.smtp.from_address"
+    value = var.email_username
+  }
 }
 
 ## Installs Jenkins chart
@@ -90,21 +135,4 @@ resource "helm_release" "jenkins" {
   values = [
     "${file("chart_values/jenkins-values.yml")}"
   ]
-}
-
-## Grafana E-mail Secret
-resource "kubernetes_manifest" "grafana-email" {
-  manifest = {
-    "apiVersion" = "v1"
-    "data" = {
-      "email_username" = var.email_username
-      "email_password" = var.email_password
-    }
-    "kind" = "Secret"
-    "metadata" = {
-      "name"      = "grafana-email"
-      "namespace" = "default"
-    }
-    "type" = "Opaque"
-  }
 }
