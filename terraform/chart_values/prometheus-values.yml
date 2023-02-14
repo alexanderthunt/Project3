@@ -2,7 +2,7 @@ alertmanager:
   enabled: true
   config:
     global:
-      smtp_smarthost: "smtp.office365.com:587"
+      smtp_smarthost: "smtp.gmail.com:587"
     route:
       receiver: "email"
       group_by: ["alertname", "job"]
@@ -19,13 +19,11 @@ alertmanager:
 
   ingress:
     enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    ingressClassName: nginx
     paths:
-      - /alerts(/|$)(.*)
+      - /alerts
   alertmanagerSpec:
-    routePrefix: /
+    routePrefix: /alerts
 
 grafana:
   namespaceOverride: default
@@ -36,7 +34,7 @@ grafana:
       root_url: "%(protocol)s://%(domain)s:/grafana/" # this lets Kubernetes auto set root_url value
     smtp:
       enabled: true
-      host: "smtp.office365.com:587"
+      host: "smtp.gmail.com:587"
       skip_verify: false
       from_name: "Grafana"
 
