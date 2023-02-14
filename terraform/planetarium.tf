@@ -1,5 +1,4 @@
 ## Kubernetes Secret
-
 resource "kubernetes_manifest" "secret_planetarium" {
   manifest = {
     "apiVersion" = "v1"
@@ -18,7 +17,6 @@ resource "kubernetes_manifest" "secret_planetarium" {
 }
 
 ## Kubernetes ClusterIP
-
 resource "kubernetes_manifest" "service_planetarium_clusterip" {
   manifest = {
     "apiVersion" = "v1"
@@ -50,7 +48,6 @@ resource "kubernetes_manifest" "service_planetarium_clusterip" {
 }
 
 ## Kubernetes ServiceMonitor
-
 resource "kubernetes_manifest" "servicemonitor_planetarium" {
   manifest = {
     "apiVersion" = "monitoring.coreos.com/v1"
@@ -82,7 +79,6 @@ resource "kubernetes_manifest" "servicemonitor_planetarium" {
 }
 
 ## Kubernetes Ingress
-
 resource "kubernetes_manifest" "ingress_planetarium" {
   manifest = {
     "apiVersion" = "networking.k8s.io/v1"

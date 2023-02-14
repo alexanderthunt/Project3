@@ -93,7 +93,6 @@ resource "helm_release" "jenkins" {
 }
 
 ## Grafana E-mail Secret
-
 resource "kubernetes_manifest" "grafana-email" {
   manifest = {
     "apiVersion" = "v1"
