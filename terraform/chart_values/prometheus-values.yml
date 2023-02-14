@@ -1,27 +1,31 @@
-# alertmanager:
-#  config:
-#    global:
-#       resolve_timeout: 5m
-#     route:
-#       receiver: email-receiver
-#       group_by: [alertname, cluster, namespace]
-#       group_wait: 30s
-#       group_interval: 5m
-#       repeat_interval: 4h
-#     receivers:
-#     - name: email-receiver
-#       email_configs:
-#       - to: recipient1@example.com
-#         to: recipient2@example.com
-#         from: sender@example.com
-#         smarthost: smtp.example.com:587
-#         auth_username: sender@example.com
-#         auth_password: ((smtp_password))
-#         require_tls: true
-#     secrets:
-#     - name: smtp-secret
-#       key: smtp_password
-#       secret: smtp-credentials
+alertmanager:
+  enabled: true
+  config:
+    global:
+      smtp_smarthost: "smtp.office365.com:587"
+    route:
+      receiver: "email"
+      group_by: ["alertname", "job"]
+      group_wait: 10s
+      group_interval: 5m
+      repeat_interval: 12h
+    receivers:
+      - name: "null"
+      - name: "email"
+        email_configs:
+          - send_resolved: true
+            headers:
+              Subject: "Prometheus Alert"
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    paths:
+      - /alerts(/|$)(.*)
+  alertmanagerSpec:
+    routePrefix: /
 
 grafana:
   namespaceOverride: default
@@ -34,14 +38,15 @@ grafana:
       enabled: true
       host: "smtp.office365.com:587"
       skip_verify: false
-      from_address: "revteamsol@outlook.com"
       from_name: "Grafana"
-  smtp:
-    existingSecret: "grafana-email"
-    userKey: "email_username"
-    passwordKey: "email_password"
 
   ingress:
     enabled: true
     path: /grafana
     ingressClassName: nginx
+
+kubeControllerManager:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
