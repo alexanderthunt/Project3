@@ -101,16 +101,6 @@ resource "helm_release" "prometheus" {
   }
 
   set {
-    name  = "alertmanager.ingress.host[0]"
-    value = var.load_balancer
-  }
-
-  set {
-    name  = "alertmanager.alertmanagerSpec.externalUrl"
-    value = var.alert_manager
-  }
-
-  set {
     name  = "grafana.grafana\\.ini.smtp.user"
     value = var.email_username
   }
