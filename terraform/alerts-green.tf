@@ -20,9 +20,9 @@ resource "kubernetes_manifest" "prometheusrule_green_alerts" {
                 "description" = "Prometheus has detected the green application is not running"
                 "summary"     = "Green App is down"
               }
-              "expr" = "up{job=\"green-app\"} != 1"
+              "expr" = "absent(up{job=\"planetarium-app\"}) == 1"
               "labels" = {
-                "severity" = "critical"
+                "severity" = "warning"
               }
             },
             {

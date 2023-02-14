@@ -10,7 +10,7 @@ spec:
     - name: AppDown
       rules:
         - alert: AppDown
-          expr: up{job="planetarium-app"} != 1
+          expr: absent(up{job="planetarium-app"}) == 1
           labels:
             severity: critical
           annotations:

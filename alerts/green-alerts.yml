@@ -14,9 +14,9 @@ spec:
         ############################
 
         - alert: AppDown
-          expr: up{job="green-app"} != 1
+          expr: absent(up{job="green-app"}) == 1
           labels:
-            severity: critical
+            severity: warning
           annotations:
             summary: "Green App is down"
             description: "Prometheus has detected the green application is not running"
