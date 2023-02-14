@@ -20,7 +20,7 @@ resource "kubernetes_manifest" "prometheusrule_planetarium_prometheus_rules_appd
                 "description" = "Prometheus has detected the application is not running"
                 "summary"     = "Planetarium App is down"
               }
-              "expr" = "up{job=\"planetarium-app\"} != 1"
+              "expr" = "absent(up{job=\"planetarium-app\"}) == 1"
               "labels" = {
                 "severity" = "critical"
               }

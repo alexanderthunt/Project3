@@ -60,52 +60,79 @@ provider "helm" {
 resource "helm_release" "loki" {
   name       = "loki"
   repository = "https://grafana.github.io/helm-charts/"
-  chart      = "grafana/loki-stack"
+  chart      = "loki-stack"
 }
 
 ## Installs Ingress-nginx chart
 resource "helm_release" "nginx" {
   name       = "nginx"
   repository = "https://kubernetes.github.io/ingress-nginx/"
-  chart      = "ingress-nginx/ingress-nginx"
+  chart      = "ingress-nginx"
 }
 
 ## Installs Prometheus chart
 resource "helm_release" "prometheus" {
   name       = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts/"
-  chart      = "prometheus-community/kube-prometheus-stack"
+  chart      = "kube-prometheus-stack"
 
   values = [
     "${file("chart_values/prometheus-values.yml")}"
   ]
+
+  set {
+    name  = "alertmanager.config.global.smtp_auth_password"
+    value = var.email_password
+  }
+
+  set {
+    name  = "alertmanager.config.global.smtp_auth_username"
+    value = var.email_username
+  }
+
+  set {
+    name  = "alertmanager.config.global.smtp_from"
+    value = var.email_username
+  }
+
+  set {
+    name  = "alertmanager.config.receivers[1].email_configs[0].to"
+    value = var.email_address
+  }
+
+  set {
+    name  = "alertmanager.ingress.host[0]"
+    value = var.load_balancer
+  }
+
+  set {
+    name  = "alertmanager.alertmanagerSpec.externalUrl"
+    value = var.alert_manager
+  }
+
+  set {
+    name  = "grafana.grafana\\.ini.smtp.user"
+    value = var.email_username
+  }
+
+  set {
+    name  = "grafana.grafana\\.ini.smtp.password"
+    value = var.email_password
+  }
+
+  set {
+    name  = "grafana.grafana\\.ini.smtp.from_address"
+    value = var.email_username
+  }
 }
 
 ## Installs Jenkins chart
 resource "helm_release" "jenkins" {
   name       = "jenkins"
   repository = "https://charts.jenkins.io/"
-  chart      = "jenkins/jenkins"
+  chart      = "jenkins"
 
   values = [
     "${file("chart_values/jenkins-values.yml")}"
   ]
-}
-
-## Grafana E-mail Secret
-
-resource "kubernetes_manifest" "grafana-email" {
-  manifest = {
-    "apiVersion" = "v1"
-    "data" = {
-      "email_username" = var.email_username
-      "email_password" = var.email_password
-    }
-    "kind" = "Secret"
-    "metadata" = {
-      "name"      = "grafana-email"
-      "namespace" = "default"
-    }
-    "type" = "Opaque"
-  }
 }
