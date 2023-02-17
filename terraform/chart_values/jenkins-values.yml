@@ -18,7 +18,6 @@ controller:
     limits:
       cpu: "2000m"
       memory: "4096Mi"
-
   JCasC:
     defaultConfig: true
   # to get generated password: kubectl get secret [--namespace [namespace]] [release] -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode ; echo
@@ -29,8 +28,26 @@ controller:
     apiVersion: networking.k8s.io/v1
     ingressClassName: nginx
     path: "/jenkins"
+  tolerations:
+    - effect: "NoSchedule"
+      operator: "Exists"
 
 agent:
+  resources:
+    requests:
+      cpu: "512m"
+      memory: "512Mi"
+    limits:
+      cpu: "512m"
+      memory: "512Mi"
+  yamlTemplate: |-
+    apiVersion: v1
+    kind: Pod
+    spec:
+      tolerations:
+        - effect: "NoSchedule"
+          operator: "Exists"
+  yamlMergeStrategy: "merge"
   podTemplates:
     planetarium: |
       - name: planetarium
@@ -40,10 +57,3 @@ agent:
         - name: docker
           image: docker:18-dind
           privileged: true
-  resources:
-    requests:
-      cpu: "512m"
-      memory: "512Mi"
-    limits:
-      cpu: "512m"
-      memory: "512Mi"
