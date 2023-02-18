@@ -6,7 +6,7 @@ metadata:
   labels:
     app: "planetarium"
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: "planetarium" # does this also need a role
@@ -56,7 +56,7 @@ spec:
           key: app
           operator: Equal
           value: greenPlanetarium
-          
+
       volumes:
         - name: logs
         - name: blue-promtail
