@@ -42,15 +42,6 @@ agent:
     limits:
       cpu: "512m"
       memory: "512Mi"
-  yamlTemplate: |-
-    apiVersion: v1
-    kind: Pod
-    spec:
-      tolerations:
-        - effect: NoSchedule
-          key: role
-          operator: Equal
-          value: green
   yamlMergeStrategy: "merge"
   podTemplates:
     planetarium: |
