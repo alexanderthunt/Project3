@@ -4,6 +4,7 @@ metadata:
   name: planetarium-service-monitor
   labels:
     release: prometheus
+  namespace: default
 spec:
   jobLabel: job
   selector:
