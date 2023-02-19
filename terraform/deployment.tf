@@ -1,17 +1,17 @@
 locals {
-  blue_deployment         = yamldecode(file("../manifests/blue-deployment.yml"))
-  blue_clusterip          = yamldecode(file("../manifests/blue-clusterIP.yml"))
-  blue_servicemonitor     = yamldecode(file("../manifests/blue-servicemonitor.yml"))
-  blue_promtail_configmap = yamldecode(file("../manifests/blue-promtail.yml"))
+  blue_deployment         = yamldecode(file("../manifests/deployment_blue/deployment.yml"))
+  blue_clusterip          = yamldecode(file("../manifests/deployment_blue/clusterIP.yml"))
+  blue_servicemonitor     = yamldecode(file("../manifests/deployment_blue/servicemonitor.yml"))
+  blue_promtail_configmap = yamldecode(file("../manifests/deployment_blue/promtail.yml"))
 
-  green_deployment         = yamldecode(file("../manifests/green-deployment.yml"))
-  green_clusterip          = yamldecode(file("../manifests/green-clusterIP.yml"))
-  green_servicemonitor     = yamldecode(file("../manifests/green-servicemonitor.yml"))
-  green_promtail_configmap = yamldecode(file("../manifests/green-promtail.yml"))
+  green_deployment         = yamldecode(file("../manifests/deployment_green/deployment.yml"))
+  green_clusterip          = yamldecode(file("../manifests/deployment_green/clusterIP.yml"))
+  green_servicemonitor     = yamldecode(file("../manifests/deployment_green/servicemonitor.yml"))
+  green_promtail_configmap = yamldecode(file("../manifests/deployment_green/promtail.yml"))
 
-  planetarium_clusterip      = yamldecode(file("../manifests/planetarium-clusterIP.yml"))
-  planetarium_servicemonitor = yamldecode(file("../manifests/planetarium-servicemonitor.yml"))
-  planetarium_ingress        = yamldecode(file("../manifests/planetarium-ingress.yml"))
+  planetarium_clusterip      = yamldecode(file("../manifests/planetarium/clusterIP.yml"))
+  planetarium_servicemonitor = yamldecode(file("../manifests/planetarium/servicemonitor.yml"))
+  planetarium_ingress        = yamldecode(file("../manifests/planetarium/ingress.yml"))
 
   dashboard_configmap_blue_green    = yamldecode(file("../manifests/dashboard/blue_green.yml"))
   dashboard_configmap_burn_rate     = yamldecode(file("../manifests/dashboard/burn_rate.yml"))
