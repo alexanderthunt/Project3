@@ -1,4 +1,16 @@
 controller:
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "256Mi"
+    limits:
+      cpu: "2000m"
+      memory: "4096Mi"
+  tolerations:
+    - effect: NoSchedule
+      key: role
+      operator: Equal
+      value: green
   installPlugins:
     - kubernetes
     - workflow-aggregator
@@ -11,14 +23,6 @@ controller:
     - pipeline-stage-view
     - timestamper
     - github
-  resources:
-    requests:
-      cpu: "50m"
-      memory: "256Mi"
-    limits:
-      cpu: "2000m"
-      memory: "4096Mi"
-
   JCasC:
     defaultConfig: true
   # to get generated password: kubectl get secret [--namespace [namespace]] [release] -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode ; echo
@@ -31,6 +35,14 @@ controller:
     path: "/jenkins"
 
 agent:
+  resources:
+    requests:
+      cpu: "512m"
+      memory: "512Mi"
+    limits:
+      cpu: "512m"
+      memory: "512Mi"
+  yamlMergeStrategy: "merge"
   podTemplates:
     planetarium: |
       - name: planetarium
@@ -40,10 +52,3 @@ agent:
         - name: docker
           image: docker:18-dind
           privileged: true
-  resources:
-    requests:
-      cpu: "512m"
-      memory: "512Mi"
-    limits:
-      cpu: "512m"
-      memory: "512Mi"

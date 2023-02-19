@@ -1,15 +1,16 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: blue-service-monitor
+  name: green-service-monitor
   labels:
     release: prometheus
+  namespace: default
 spec:
   jobLabel: job
   selector:
     matchLabels:
       app: planetarium
-      job: blue-app
+      job: green-app
   endpoints:
     - port: http
       path: /actuator/prometheus

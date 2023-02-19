@@ -37,11 +37,17 @@ grafana:
       host: "smtp.gmail.com:587"
       skip_verify: false
       from_name: "Grafana"
-
   ingress:
     enabled: true
     path: /grafana
     ingressClassName: nginx
+  additionalDataSources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-kube-prometheus-prometheus.default:9090
+    - name: Loki
+      type: loki
+      url: http://loki:3100
 
 kubeControllerManager:
   enabled: false

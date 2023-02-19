@@ -1,28 +1,28 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "planetarium-deployment-blue"
+  name: "planetarium-deployment-green"
   namespace: "default"
   labels:
-    app: "planetarium"
+    app: "planetarium" # doulbe check that this is right
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "planetarium" # does this also need a role
-      role: "blue"
+      app: "planetarium" # does this need role
+      role: "green"
   template:
     metadata:
       labels:
         app: "planetarium"
-        role: "blue"
+        role: "green"
     spec:
       containers:
         - name: "planetarium"
-          image: "esuminski/p3planetarium:base" # ${VERSION}
+          image: "sabrinasmith/planetarium:incident4" # twcl774/p3green:test # ${VERSION}
           envFrom:
             - secretRef:
-                name: planetarium-secret
+                name: planetarium-secret # double check
           imagePullPolicy: "Always"
           ports:
             - containerPort: 8080
@@ -36,7 +36,7 @@ spec:
           volumeMounts:
             - name: logs
               mountPath: /logs
-            - name: blue-promtail
+            - name: green-promtail
               mountPath: /etc/promtail
       affinity:
         nodeAffinity:
@@ -46,19 +46,15 @@ spec:
                   - key: kubernetes.io/hostname
                     operator: In
                     values:
-                      - ip-10-0-2-30.ec2.internal
+                      - ip-10-0-1-11.ec2.internal
       tolerations:
         - effect: NoSchedule
-          key: app
+          key: role
           operator: Equal
-          value: greenPlanetarium
-        - effect: NoExecute
-          key: app
-          operator: Equal
-          value: greenPlanetarium
-          
+          value: green
+
       volumes:
         - name: logs
-        - name: blue-promtail
+        - name: green-promtail
           configMap:
-            name: blue-promtail # make sure you apply the config map before this deployment
+            name: green-promtail # make sure you apply the config map before this deployment
