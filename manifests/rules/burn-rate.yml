@@ -1,12 +1,13 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: error-budget-burn
+  name: burn-rate
   labels:
     release: prometheus
+  namespace: default
 spec:
   groups:
-    - name: SLOs-http_server_requests_seconds_count
+    - name: SLOs-http_requests
       rules:
         - alert: ErrorBudgetBurn 2 Days window
           annotations:
@@ -69,76 +70,65 @@ spec:
             job: planetarium-app
             severity: warning
 
-        ##
-        ## Calculate the failure rate of http requests
-        ##
+    - name: SLOs-latency
+      rules:
+        - alert: LatencyBudgetBurn 2 Days window
+          annotations:
+            summary: "2% error budget consumption every 1 hour"
+            description: "Failure rate of 2.88 or higher"
+            message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
 
-        - expr: |
-            (
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[5m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m]))
-            ) * 100
+          ##
+          ## Alert fires if the failure rate is greater than burn-rate multiplied by the allowed failure rate
+          ##
+
+          expr: |
+            latencytarget:http_server_requests_seconds:rate5m > (14.4 * 0.2)
+            and
+            latencytarget:http_server_requests_seconds:rate1h > (14.4 * 0.2)
+          for: 2m
           labels:
             job: planetarium-app
-          record: http_server_requests_seconds_count:burnrate5m
+            severity: critical
 
-        - expr: |
-            (
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[30m]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[30m]))
-            ) * 100
+        - alert: LatencyBudgetBurn 5 Days window
+          annotations:
+            summary: "5% error budget consumption every 6 hours"
+            description: "Failure rate of 1.2 or higher"
+            message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
+          expr: |
+            latencytarget:http_server_requests_seconds:rate30m > (6 * 0.2)
+            and
+            latencytarget:http_server_requests_seconds:rate6h > (6 * 0.2)
+          for: 15m
           labels:
             job: planetarium-app
-          record: http_server_requests_seconds_count:burnrate30m
+            severity: critical
 
-        - expr: |
-            (
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[1h]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1h]))
-            ) * 100
+        - alert: LatencyBudgetBurn 10 Days window
+          annotations:
+            summary: "10% error budget consumption every 1 day"
+            description: "Failure rate of 0.6 or higher"
+            message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
+          expr: |
+            latencytarget:http_server_requests_seconds:rate2h > (3 * 0.2)
+            and
+            latencytarget:http_server_requests_seconds:rate1d > (3 * 0.2)
+          for: 1h
           labels:
             job: planetarium-app
-          record: http_server_requests_seconds_count:burnrate1h
+            severity: warning
 
-        - expr: |
-            (
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[2h]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[2h]))
-            ) * 100
+        - alert: LatencyBudgetBurn 30 Days window
+          annotations:
+            summary: "10% error budget consumption every 3 days"
+            description: "Failure rate of 0.2 or higher"
+            message: "High requests latency budget burn for job=planetarium-app (current value: {{ $value }})"
+          expr: |
+            latencytarget:http_server_requests_seconds:rate6h > (1 * 0.2)
+            and
+            latencytarget:http_server_requests_seconds:rate3d > (1 * 0.2)
+          for: 3h
           labels:
             job: planetarium-app
-          record: http_server_requests_seconds_count:burnrate2h
-
-        - expr: |
-            (
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[6h]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[6h]))
-            ) * 100
-          labels:
-            job: planetarium-app
-          record: http_server_requests_seconds_count:burnrate6h
-
-        - expr: |
-            (
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[1d]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1d]))
-            ) * 100
-          labels:
-            job: planetarium-app
-          record: http_server_requests_seconds_count:burnrate1d
-
-        - expr: |
-            (
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[3d]))
-            /
-            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[3d]))
-            ) * 100
-          labels:
-            job: planetarium-app
-          record: http_server_requests_seconds_count:burnrate3d
+            severity: warning

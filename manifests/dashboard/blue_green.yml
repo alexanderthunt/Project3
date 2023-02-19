@@ -1580,7 +1580,7 @@ data:
               "refId": "StandardVariableQuery"
             },
             "refresh": 1,
-            "regex": "(green-app|planetarium-app)",
+            "regex": "(green-app|blue-app)",
             "skipUrlSync": false,
             "sort": 0,
             "type": "query"

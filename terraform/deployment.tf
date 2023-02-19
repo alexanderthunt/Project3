@@ -19,7 +19,7 @@ locals {
 }
 
 data "template_file" "planetarium_secret" {
-  template = file("../manifests/planetarium-secret.yml")
+  template = file("../manifests/planetarium/secret.yml")
 
   vars = {
     data_url = var.spring_url
@@ -86,4 +86,16 @@ resource "kubernetes_manifest" "dashboard_configmap_burn_rate" {
 
 resource "kubernetes_manifest" "dashboard_configmap_green_utility" {
   manifest = local.dashboard_configmap_green_utility
+}
+
+resource "kubernetes_manifest" "rules_records" {
+  manifest = yamldecode(file("../manifests/rules/records.yml"))
+}
+
+resource "kubernetes_manifest" "rules_alerts" {
+  manifest = yamldecode(file("../manifests/rules/alerts.yml"))
+}
+
+resource "kubernetes_manifest" "rules_burn_rate" {
+  manifest = yamldecode(file("../manifests/rules/burn-rate.yml"))
 }

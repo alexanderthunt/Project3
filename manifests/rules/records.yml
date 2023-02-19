@@ -1,0 +1,381 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: records
+  labels:
+    release: prometheus
+  namespace: default
+spec:
+  groups:
+    - name: success-rate
+      rules:
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="blue-app", outcome!="SERVER_ERROR"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="blue-app"}[5m]))
+          labels:
+            job: "blue-app"
+          record: successrate:rate5m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="blue-app", outcome!="SERVER_ERROR"}[15m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="blue-app"}[15m]))
+          labels:
+            job: "blue-app"
+          record: successrate:rate15m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="blue-app", outcome!="SERVER_ERROR"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="blue-app"}[30m]))
+          labels:
+            job: "blue-app"
+          record: successrate:rate30m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="blue-app", outcome!="SERVER_ERROR"}[60m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="blue-app"}[60m]))
+          labels:
+            job: "blue-app"
+          record: successrate:rate60m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[5m]))
+          labels:
+            job: "green-app"
+          record: successrate:rate5m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[15m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[15m]))
+          labels:
+            job: "green-app"
+          record: successrate:rate15m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[30m]))
+          labels:
+            job: "green-app"
+          record: successrate:rate30m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_count{job="green-app", outcome!="SERVER_ERROR"}[60m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[60m]))
+          labels:
+            job: "green-app"
+          record: successrate:rate60m
+
+    - name: latency
+      rules:
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="blue-app"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="blue-app"}[5m]))
+          labels:
+            job: "blue-app"
+          record: latency:rate5m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="blue-app"}[15m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="blue-app"}[15m]))
+          labels:
+            job: "blue-app"
+          record: latency:rate15m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="blue-app"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="blue-app"}[30m]))
+          labels:
+            job: "blue-app"
+          record: latency:rate30m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="blue-app"}[60m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="blue-app"}[60m]))
+          labels:
+            job: "blue-app"
+          record: latency:rate60m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[5m]))
+          labels:
+            job: "green-app"
+          record: latency:rate5m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[15m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[15m]))
+          labels:
+            job: "green-app"
+          record: latency:rate15m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[30m]))
+          labels:
+            job: "green-app"
+          record: latency:rate30m
+
+        - expr: |
+            sum(rate(http_server_requests_seconds_sum{job="green-app"}[60m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="green-app"}[60m]))
+          labels:
+            job: "green-app"
+          record: latency:rate60m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="blue-app"}[5m])))
+          labels:
+            job: "blue-app"
+          record: latency99:rate5m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="blue-app"}[15m])))
+          labels:
+            job: "blue-app"
+          record: latency99:rate15m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="blue-app"}[30m])))
+          labels:
+            job: "blue-app"
+          record: latency99:rate30m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="blue-app"}[60m])))
+          labels:
+            job: "blue-app"
+          record: latency99:rate60m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="green-app"}[5m])))
+          labels:
+            job: "green-app"
+          record: latency99:rate5m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="green-app"}[15m])))
+          labels:
+            job: "green-app"
+          record: latency99:rate15m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="green-app"}[30m])))
+          labels:
+            job: "green-app"
+          record: latency99:rate30m
+
+        - expr: |
+            histogram_quantile(0.99, sum by(le) (rate(http_server_requests_seconds_bucket{job="green-app"}[60m])))
+          labels:
+            job: "green-app"
+          record: latency99:rate60m
+
+    - name: memory-usage
+      rules:
+        - expr: container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-blue.*"}
+          record: memory_usage:blue
+
+        - expr: container_memory_working_set_bytes{container="planetarium", pod=~"planetarium-deployment-green.*"}
+          record: memory_usage:green
+
+    - name: cpu-usage
+      rules:
+        - expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[5m])
+          record: cpu_usage:5m:blue
+
+        - expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[15m])
+          record: cpu_usage:15m:blue
+
+        - expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[30m])
+          record: cpu_usage:30m:blue
+
+        - expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-blue.*"}[60m])
+          record: cpu_usage:60m:blue
+
+        - expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[5m])
+          record: cpu_usage:5m:green
+
+        - expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[15m])
+          record: cpu_usage:15m:green
+
+        - expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green*"}[30m])
+          record: cpu_usage:30m:green
+
+        - expr: rate(container_cpu_usage_seconds_total{container="planetarium", pod=~"planetarium-deployment-green.*"}[60m])
+          record: cpu_usage:60m:green
+
+        ##
+        ## Calculate the failure rate of http requests
+        ##
+
+    - name: SLOs-http_requests
+      rules:
+        - expr: |
+            (
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m]))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: http_server_requests_seconds_count:burnrate5m
+
+        - expr: |
+            (
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[30m]))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: http_server_requests_seconds_count:burnrate30m
+
+        - expr: |
+            (
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[1h]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1h]))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: http_server_requests_seconds_count:burnrate1h
+
+        - expr: |
+            (
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[2h]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[2h]))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: http_server_requests_seconds_count:burnrate2h
+
+        - expr: |
+            (
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[6h]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[6h]))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: http_server_requests_seconds_count:burnrate6h
+
+        - expr: |
+            (
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[1d]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1d]))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: http_server_requests_seconds_count:burnrate1d
+
+        - expr: |
+            (
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app",status=~"5.."}[3d]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[3d]))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: http_server_requests_seconds_count:burnrate3d
+
+          ##
+          ## Returns the failure rate of responses that are greater than 201 ms response time
+          ##
+
+    - name: SLOs-latency
+      rules:
+        - expr: |
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[5m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[5m])))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: latencytarget:http_server_requests_seconds:rate5m
+
+        - expr: |
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[30m]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[30m])))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: latencytarget:http_server_requests_seconds:rate30m
+
+        - expr: |
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[1h]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1h])))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: latencytarget:http_server_requests_seconds:rate1h
+
+        - expr: |
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[2h]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[2h])))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: latencytarget:http_server_requests_seconds:rate2h
+
+        - expr: |
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[6h]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[6h])))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: latencytarget:http_server_requests_seconds:rate6h
+
+        - expr: |
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[1d]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[1d])))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: latencytarget:http_server_requests_seconds:rate1d
+
+        - expr: |
+            (
+            1 - (
+            sum(rate(http_server_requests_seconds_bucket{job="planetarium-app", code!~"5..", le="0.20132659"}[3d]))
+            /
+            sum(rate(http_server_requests_seconds_count{job="planetarium-app"}[3d])))
+            ) * 100
+          labels:
+            job: planetarium-app
+          record: latencytarget:http_server_requests_seconds:rate3d
