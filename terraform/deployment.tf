@@ -12,6 +12,10 @@ locals {
   planetarium_clusterip      = yamldecode(file("../manifests/planetarium-clusterIP.yml"))
   planetarium_servicemonitor = yamldecode(file("../manifests/planetarium-servicemonitor.yml"))
   planetarium_ingress        = yamldecode(file("../manifests/planetarium-ingress.yml"))
+
+  dashboard_configmap_blue_green    = yamldecode(file("../manifests/dashboard/blue_green.yml"))
+  dashboard_configmap_burn_rate     = yamldecode(file("../manifests/dashboard/burn_rate.yml"))
+  dashboard_configmap_green_utility = yamldecode(file("../manifests/dashboard/green_utility.yml"))
 }
 
 data "template_file" "planetarium_secret" {
@@ -70,4 +74,16 @@ resource "kubernetes_manifest" "planetarium_clusterip" {
 
 resource "kubernetes_manifest" "planetarium_servicemonitor" {
   manifest = local.planetarium_servicemonitor
+}
+
+resource "kubernetes_manifest" "dashboard_configmap_blue_green" {
+  manifest = local.dashboard_configmap_blue_green
+}
+
+resource "kubernetes_manifest" "dashboard_configmap_burn_rate" {
+  manifest = local.dashboard_configmap_burn_rate
+}
+
+resource "kubernetes_manifest" "dashboard_configmap_green_utility" {
+  manifest = local.dashboard_configmap_green_utility
 }
